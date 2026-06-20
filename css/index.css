@@ -68,7 +68,7 @@
     margin: 20px auto 0 auto;
 }
 
-#item-container{
+.item-container{
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
