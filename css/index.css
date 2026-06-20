@@ -1,0 +1,91 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+#user-container{
+    display: flex;
+    padding: 20px;
+    justify-content: space-between;
+}
+
+#user-area{
+    display: flex;
+}
+
+.avatar{
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+#user-data{
+    padding-left: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#user-name{
+    font-size: 24px;
+}
+
+#user-level{
+    font-size: 16px;
+}
+
+.edit-btn{
+    width: 35px;
+    height: 35px;
+    border-radius: 5px;
+    background-image: url("../assets/edit.jpg");
+    background-size: cover;
+    border: none;
+}
+
+#item-title{
+    width: 80vw;
+    margin: 0 auto;
+}
+
+#item-title p{
+    font-size: 14px;
+    margin-left: 15px;
+    margin-bottom: 5px;
+}
+
+#divider{
+    width: 80vw;
+    border: none;
+    border-top: 2px solid #000000;
+    margin: 0 auto;
+}
+
+.item{
+    width: 70vw;
+    margin: 20px auto 0 auto;
+}
+
+#item-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 10px;
+}
+
+.item-name{
+    font-size: 14px;
+}
+
+.item-data{
+    font-size: 12px;
+}
+
+.item-line{
+    width: 70vw;
+    border: none;
+    border-top: 1px solid #9D9D9D;
+    margin: 5px auto;
+}
