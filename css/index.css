@@ -4,6 +4,11 @@
     box-sizing:border-box;
 }
 
+button {
+    border: none;
+    background: none;
+}
+
 #user-container{
     display: flex;
     padding: 20px;
@@ -36,7 +41,7 @@
     font-size: 16px;
 }
 
-.edit-btn{
+#edit-btn{
     width: 35px;
     height: 35px;
     border-radius: 5px;
@@ -77,10 +82,12 @@
 
 .item-name{
     font-size: 14px;
+    color: #626161;
 }
 
 .item-data{
     font-size: 12px;
+    color: #626161;
 }
 
 .item-line{
@@ -88,4 +95,48 @@
     border: none;
     border-top: 1px solid #9D9D9D;
     margin: 5px auto;
+}
+
+.modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.5);
+
+    display: flex;
+    align-items: flex-end;
+}
+
+#modal-content{
+    background: #EDEBEB;
+    border-radius: 10px 10px 0 0;
+    width: 100vw;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.text-area{
+    width: 75vw;
+}
+
+.text-area button{
+    margin-left: 20px;
+    margin-bottom: 5px;
+    margin-top: 25px;
+    font-size: 20px;
+    color: #626161;
+}
+
+.text-area hr{
+    width: 75vw;
+    color: #626161;
+}
+
+.hidden {
+    display: none;
 }
