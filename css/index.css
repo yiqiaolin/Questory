@@ -108,7 +108,7 @@ button {
     top: 0;
     left: 0;
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
     background: rgba(0,0,0,0.5);
 
     display: flex;
@@ -151,7 +151,7 @@ button {
     background: #EDEBEB;
     border-radius: 10px 10px 0 0;
     width: 100vw;
-    height: 75vh;
+    height: 75dvh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -174,7 +174,7 @@ button {
 
 #create-modal-content textarea {
     width: 75vw;
-    height: 50%;
+    height: 30%;
     box-sizing: border-box;
     resize: none;   
     background: transparent;  
@@ -183,15 +183,15 @@ button {
     padding: 5px;
 }
 
-#room-code{
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
 #create-quest-btn{
+    margin-top: 30px;
     background: #c1c1c1;
     font-size: 24px;
     color: #626161;
     width: 85vw;
     padding: 5px;
+}
+
+#create-quest-date{
+    color: #626161;
 }

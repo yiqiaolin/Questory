@@ -22,20 +22,6 @@
         <hr id="divider"/>
     </div>
     <div id="item-area">
-        <div class="item">
-            <div class="item-container"> 
-                <p class="item-name">副本名稱</p>
-                <p class="item-data">?? / ?? / ??</p>
-            </div>
-            <hr class="item-line"/>
-        </div>
-        <div class="item">
-            <div class="item-container"> 
-                <p class="item-name">副本名稱</p>
-                <p class="item-data">?? / ?? / ??</p>
-            </div>
-            <hr class="item-line"/>
-        </div>
     </div>
     <div id="edit-modal" class="modal hidden">
         <div id="edit-modal-content">
@@ -56,12 +42,15 @@
                 <hr/>
             </div>
             <div class="text-area">
+                <p>副本開始日期</p>
+                <input type="date" value="2007-08-21" id="create-quest-date">
+            </div>
+            <div class="text-area">
                 <p>描述</p>
             </div>
-            <textarea></textarea>
-            <p id="room-code"><b>Room Code</b></p>
+            <textarea id="create-quest-description"></textarea>
             <button id="create-quest-btn">建立</button>
         </div>
     </div>
-    <script src="js/index.js"></script>
+    <script type="module" src="js/index.js"></script>
 </body>
