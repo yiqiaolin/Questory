@@ -4,6 +4,12 @@
     box-sizing:border-box;
 }
 
+input {
+    border: none;
+    background: none;
+    outline: none; 
+}
+
 button {
     border: none;
     background: none;
@@ -109,7 +115,7 @@ button {
     align-items: flex-end;
 }
 
-#modal-content{
+#edit-modal-content{
     background: #EDEBEB;
     border-radius: 10px 10px 0 0;
     width: 100vw;
@@ -139,4 +145,53 @@ button {
 
 .hidden {
     display: none;
+}
+
+#create-modal-content{
+    background: #EDEBEB;
+    border-radius: 10px 10px 0 0;
+    width: 100vw;
+    height: 75vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.text-area input{
+    font-size: 20px;
+    margin-left: 10px;
+    margin-bottom: 2px;
+}
+
+.text-area p{
+    color: #626161;
+    margin-top: 20px;
+    font-size: 15px;
+    margin-left: 10px;
+    margin-bottom: 2px;
+}
+
+#create-modal-content textarea {
+    width: 75vw;
+    height: 50%;
+    box-sizing: border-box;
+    resize: none;   
+    background: transparent;  
+    border: 1px solid #626161;
+    outline: none; 
+    padding: 5px;
+}
+
+#room-code{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#create-quest-btn{
+    background: #c1c1c1;
+    font-size: 24px;
+    color: #626161;
+    width: 85vw;
+    padding: 5px;
 }

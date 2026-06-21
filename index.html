@@ -38,15 +38,29 @@
         </div>
     </div>
     <div id="edit-modal" class="modal hidden">
-        <div id="modal-content">
+        <div id="edit-modal-content">
             <div class="text-area">
-                <button>創建副本</button>
+                <button id="create-quest">建立副本</button>
                 <hr/>
             </div>
             <div class="text-area">
                 <button>加入副本</button>
                 <hr/>
             </div>
+        </div>
+    </div>
+    <div id="create-modal" class="modal hidden">
+        <div id="create-modal-content">
+            <div class="text-area">
+                <input type="text" placeholder="副本名稱" id="create-quest-name">
+                <hr/>
+            </div>
+            <div class="text-area">
+                <p>描述</p>
+            </div>
+            <textarea></textarea>
+            <p id="room-code"><b>Room Code</b></p>
+            <button id="create-quest-btn">建立</button>
         </div>
     </div>
     <script src="js/index.js"></script>
