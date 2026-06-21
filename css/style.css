@@ -1,0 +1,16 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+input {
+    border: none;
+    background: none;
+    outline: none; 
+}
+
+button {
+    border: none;
+    background: none;
+}
