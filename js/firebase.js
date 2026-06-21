@@ -14,3 +14,12 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 export { db };
+
+
+import { getAuth, GoogleAuthProvider, signInWithPopup } 
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+
+export { auth, provider, signInWithPopup };
