@@ -1,12 +1,13 @@
 import { db } from "./firebase.js";
 import { collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-export async function createRoom(name, description, date) {
+export async function createRoom(name, description, date, user) {
   await addDoc(collection(db, "rooms"), {
     name: name,
     date: date,
     description: description,
-    status: "prepare"
+    status: "prepare",
+    owner: user
   });
 }
 

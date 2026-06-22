@@ -31,7 +31,7 @@
                 <hr/>
             </div>
             <div class="text-area">
-                <button>加入副本</button>
+                <button id="join-quest">加入副本</button>
                 <hr/>
             </div>
         </div>
@@ -51,6 +51,15 @@
             </div>
             <textarea id="create-quest-description"></textarea>
             <button id="create-quest-btn">建立</button>
+        </div>
+    </div>
+    <div id="join-modal" class="modal hidden">
+        <div id="join-modal-content">
+            <div class="text-area">
+                <input type="text" placeholder="副本Code" id="join-quest-id">
+                <hr/>
+            </div>
+            <button id="join-quest-btn">申請加入</button>
         </div>
     </div>
     <script type="module" src="../js/main.js"></script>

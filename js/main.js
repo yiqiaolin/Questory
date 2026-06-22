@@ -9,11 +9,18 @@ const createQuest = document.getElementById("create-quest");
 const createModal = document.getElementById("create-modal");
 const createQuestBtn = document.getElementById("create-quest-btn");
 const itemArea = document.getElementById("item-area");
+const joinQuest = document.getElementById("join-quest");
+const joinModal = document.getElementById("join-modal");
 
-function showRoomList(rooms){
-    itemArea.innerHTML = ``;
-    rooms.forEach(room => {
-        itemArea.innerHTML = itemArea.innerHTML + `
+function showRoomList(rooms) {
+    if (!auth.currentUser) return;
+
+    const uid = auth.currentUser.uid;
+
+    itemArea.innerHTML = rooms
+        .filter(room => room.owner === uid)
+        .sort((a, b) => new Date(b.date) - new Date(a.date)) 
+        .map(room => `
             <div class="item">
                 <div class="item-container"> 
                     <p class="item-name">${room.name}</p>
@@ -21,10 +28,11 @@ function showRoomList(rooms){
                 </div>
                 <hr class="item-line"/>
             </div>
-        `;
-    });
-        
-    }
+        `)
+        .join("");
+}
+
+
 
 onAuthStateChanged(auth, (user) => {
     if (!user) {
@@ -57,12 +65,33 @@ createModal.addEventListener("click", function (e) {
 });
 
 createQuestBtn.addEventListener("click", async function(){
-    const name = document.getElementById("create-quest-name").value;
-    const desc = document.getElementById("create-quest-description").value;
-    const date = document.getElementById("create-quest-date").value;
-    room.createRoom(name, desc, date);
+    const nameInput = document.getElementById("create-quest-name");
+    const descInput = document.getElementById("create-quest-description");
+    const dateInput = document.getElementById("create-quest-date");
+    const name = nameInput.value;
+    const desc = descInput.value;
+    const date = dateInput.value;
+
+    const user = auth.currentUser.uid;
+
+    await room.createRoom(name, desc, date, user);
     createModal.classList.add("hidden");
     editModal.classList.add("hidden");
     const rooms = await room.getRooms();
     showRoomList(rooms);
+
+    nameInput.value = "";
+    descInput.value = "";
+    dateInput.value = "2007-08-21";
 })
+
+joinQuest.addEventListener("click", function(){
+   joinModal.classList.remove("hidden");
+})
+
+joinModal.addEventListener("click", function (e) {
+    if (e.target === joinModal) {
+        joinModal.classList.add("hidden");
+        editModal.classList.add("hidden");
+    }
+});
