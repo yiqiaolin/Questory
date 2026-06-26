@@ -11,6 +11,9 @@ input {
 }
 
 button {
+    appearance: none;
+    -webkit-appearance: none;
     border: none;
     background: none;
+    font-family: inherit;
 }
