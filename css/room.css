@@ -1,0 +1,131 @@
+body{
+    padding-top: 100px;
+    padding-bottom: 15dvh;
+}
+#fixed-top{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#fixed-top p{
+    font-size: 24px;
+    margin-top: 40px;
+    margin-left: 40px;
+}
+
+#edit-btn{
+    width: 35px;
+    height: 35px;
+    border-radius: 5px;
+    background-image: url("../assets/edit.png");
+    background-size: cover;
+    border: none;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+
+.title{
+    width: 80vw;
+    margin: 0 auto;
+}
+
+.title p{
+    font-size: 14px;
+    margin-left: 15px;
+    margin-bottom: 5px;
+}
+
+.title hr{
+    width: 80vw;
+    border: none;
+    border-top: 2px solid #000000;
+    margin: 0 auto;
+}
+
+#member-area{
+    margin-bottom: 50px;
+}
+
+.member-item{
+    width: 70vw;
+    margin: 10px auto 0 auto;
+}
+
+.member-item-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 10px;
+}
+
+.member-item-name{
+    font-size: 14px;
+    color: #626161;
+}
+
+.member-item hr{
+    width: 70vw;
+    border: none;
+    border-top: 1px solid #9D9D9D;
+    margin: 2px auto;
+}
+
+.member-btn-area{
+    display: flex;
+    justify-content: space-between;
+    width: 85px;
+}
+
+.add-member-btn,
+.delete-member-btn{
+    width: 40px;
+    height: 18px;
+    border-radius: 5px;
+    background-color: #c1c1c1;
+    font-size: 10px;
+    border: none;
+}
+
+.task-item{
+    width: 70vw;
+    margin: 15px auto 0 auto;
+}
+
+.task-item-name{
+    font-size: 14px;
+    color: #626161;
+}
+
+.task-item hr{
+    width: 70vw;
+    border: none;
+    border-top: 1px solid #9D9D9D;
+    margin: 2px auto;
+}
+
+#fixed-bottom{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    background: #EDEBEB;
+    border-radius: 10px 10px 0 0;
+    width: 100vw;
+    height: 15dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#start-btn{
+    margin-top: 10px;
+    background: #c1c1c1;
+    font-size: 24px;
+    color: #626161;
+    width: 60vw;
+    padding: 5px;
+}

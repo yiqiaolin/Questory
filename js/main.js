@@ -1,7 +1,7 @@
 import { auth } from "./firebase.js";
 import { onAuthStateChanged } 
 from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
-import * as room from "./room.js";
+import * as room from "./firebase_room.js";
 
 const editBtn = document.getElementById("edit-btn");
 const editModal = document.getElementById("edit-modal");
@@ -94,4 +94,10 @@ joinModal.addEventListener("click", function (e) {
         joinModal.classList.add("hidden");
         editModal.classList.add("hidden");
     }
+});
+
+itemArea.addEventListener("click", function (e) {
+    const item = e.target.closest(".item");
+    if (!item) return;
+    console.log("點到一個房間");
 });
