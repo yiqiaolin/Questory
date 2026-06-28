@@ -3,6 +3,15 @@ import { onAuthStateChanged }
 from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 import * as room from "./firebase_room.js";
 
+
+// 確認登入
+onAuthStateChanged(auth, (user) => {
+    if (!user) {
+        window.location.href = "../index.html";
+    }
+});
+
+
 const editBtn = document.getElementById("edit-btn");
 const editModal = document.getElementById("edit-modal");
 const createQuest = document.getElementById("create-quest");
@@ -11,6 +20,7 @@ const createQuestBtn = document.getElementById("create-quest-btn");
 const itemArea = document.getElementById("item-area");
 const joinQuest = document.getElementById("join-quest");
 const joinModal = document.getElementById("join-modal");
+
 
 function showRoomList(rooms) {
     if (!auth.currentUser) return;
@@ -21,7 +31,7 @@ function showRoomList(rooms) {
         .filter(room => room.owner === uid)
         .sort((a, b) => new Date(b.date) - new Date(a.date)) 
         .map(room => `
-            <div class="item">
+            <div class="item" data-id="${room.id}">
                 <div class="item-container"> 
                     <p class="item-name">${room.name}</p>
                     <p class="item-data">${room.date}</p>
@@ -33,14 +43,7 @@ function showRoomList(rooms) {
 }
 
 
-
-onAuthStateChanged(auth, (user) => {
-    if (!user) {
-        window.location.href = "../index.html";
-    }
-});
-
-const rooms = await room.getRooms();
+const rooms = await room.getRoomList();
 showRoomList(rooms);    
 
 editBtn.addEventListener("click", function(){
@@ -73,11 +76,12 @@ createQuestBtn.addEventListener("click", async function(){
     const date = dateInput.value;
 
     const user = auth.currentUser.uid;
+    const userName = auth.currentUser.displayName;
 
-    await room.createRoom(name, desc, date, user);
+    await room.createRoom(name, desc, date, user, userName);
     createModal.classList.add("hidden");
     editModal.classList.add("hidden");
-    const rooms = await room.getRooms();
+    const rooms = await room.getRoomList();
     showRoomList(rooms);
 
     nameInput.value = "";
@@ -99,5 +103,6 @@ joinModal.addEventListener("click", function (e) {
 itemArea.addEventListener("click", function (e) {
     const item = e.target.closest(".item");
     if (!item) return;
-    console.log("點到一個房間");
+    const roomId = item.dataset.id;
+    window.location.href = `room.html?id=${roomId}`;
 });

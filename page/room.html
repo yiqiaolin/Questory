@@ -9,34 +9,17 @@
 </head>
 <body>
     <div id="fixed-top">
-        <p>副本名稱</p>
+        <div id="fixed-top-container">
+            <p id="quest-title"></p>
+            <p id="quest-code"></p>
+        </div>
         <button id="edit-btn"></button>
     </div>
     <div class="title">
-        <p>副本夥伴</p>
+        <p >副本夥伴</p>
         <hr/>
     </div>
     <div id="member-area">
-        <div class="member-item">
-            <div class="member-item-container"> 
-                <p class="member-item-name">成員名稱</p>
-                <div class="member-btn-area">
-                    <button class="add-member-btn">加入</button>
-                    <button class="delete-member-btn">移除</button>
-                </div>
-            </div>
-            <hr/>
-        </div>
-        <div class="member-item">
-            <div class="member-item-container"> 
-                <p class="member-item-name">成員名稱</p>
-                <div class="member-btn-area">
-                    <button class="add-member-btn">加入</button>
-                    <button class="delete-member-btn">移除</button>
-                </div>
-            </div>
-            <hr/>
-        </div>
     </div>
     <div class="title">
         <p >任務</p>
@@ -56,4 +39,6 @@
     <div id="fixed-bottom">
         <button id="start-btn">開始副本</button>
     </div>
+
+    <script type="module" src="../js/room.js"></script>
 </body>
