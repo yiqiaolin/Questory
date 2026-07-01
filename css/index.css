@@ -1,5 +1,5 @@
 body {
-    height: 100vh;
+    height: 100dvh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -8,12 +8,21 @@ body {
 }
 
 p{
-    font-size: 16px;
+    font-size: 14px;
 }
 #login-btn{
     font-size: 16px;
     padding: 3px 10px;
-    margin-top: 40px;
+    margin-top: 80px;
+    border-radius: 30px;
+    width: 70vw;
+    height: 40px;
     background-color: #C1C1C1;
     color: #626161;
+}
+
+img{
+    width: 200px;
+    height: 200px;
+    margin-bottom: 10px;
 }
