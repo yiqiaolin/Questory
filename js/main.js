@@ -26,7 +26,8 @@ const joinModal = document.getElementById("join-modal");
 
 // 顯示副本列表  輸入:資料庫rooms集合內所有文件
 function showRoomList(rooms) {
-    const uid = auth.currentUser.uid;
+    const uid = auth.currentUser?.uid;
+    if (!uid) return;
 
     itemArea.innerHTML = rooms
         .filter(room => room.owner === uid)
