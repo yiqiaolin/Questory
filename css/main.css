@@ -199,3 +199,9 @@
     width: 85vw;
     padding: 5px;
 }
+
+#hint{
+    font-size: 12px;
+    margin-top: 3px;
+    color: #6b9fde;
+}

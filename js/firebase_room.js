@@ -1,6 +1,5 @@
 import { db } from "./firebase.js";
-import { collection, doc, getDoc, addDoc, getDocs, updateDoc} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-
+import { arrayUnion, collection, doc, getDoc, addDoc, getDocs, updateDoc} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 // ----------函式定義----------
 
@@ -82,4 +81,26 @@ export async function deleteMember(roomId, targetUid) {
     await updateDoc(ref, {
         members: updatedMembers
     });
+}
+
+// 申請加入副本 新增資料庫members欄位  輸入:欲申請副本ID、申請人ID 輸出:找不到副本輸出null 已加入輸出1
+export async function joinRoom(roomId, userUid){
+    const ref = doc(db, "rooms", roomId);
+    const snap = await getDoc(ref);
+    if (!snap.exists()) {
+        return null;
+    }
+
+    const members = snap.data().members;
+    const isMember = members.some(m => m.uid === userUid);
+    if (isMember){
+        return 1;
+    }
+    await updateDoc(ref, {
+        members: arrayUnion({
+            uid: userUid,
+            status: "pending"
+        })
+    });
+    return 2;
 }

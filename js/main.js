@@ -20,6 +20,7 @@ const createQuestBtn = document.getElementById("create-quest-btn");
 const itemArea = document.getElementById("item-area");
 const joinQuest = document.getElementById("join-quest");
 const joinModal = document.getElementById("join-modal");
+const joinQuestBtn = document.getElementById("join-quest-btn");
 
 
 // ----------函式定義----------
@@ -107,8 +108,13 @@ joinQuest.addEventListener("click", function(){
 // 點擊關閉加入副本modal
 joinModal.addEventListener("click", function (e) {
     if (e.target === joinModal) {
+        let hint = document.getElementById("hint");
+        const codeId = document.getElementById("code-id");
+        let code = codeId.value;
         joinModal.classList.add("hidden");
         editModal.classList.add("hidden");
+        codeId.value = "";
+        hint.innerText = "";
     }
 });
 
@@ -119,3 +125,22 @@ itemArea.addEventListener("click", function (e) {
     const roomId = item.dataset.id;
     window.location.href = `room.html?id=${roomId}`;
 });
+
+// 點擊執行申請加入副本動作
+joinQuestBtn.addEventListener("click", async function() {
+    let hint = document.getElementById("hint");
+    const codeId = document.getElementById("code-id");
+    let code = codeId.value;
+    const userUid = auth.currentUser.uid;
+    let result = await room.joinRoom(code, userUid);
+    if (!result){
+        hint.innerText = "此副本Code不存在";
+    }
+    else if (result === 1){
+        hint.innerText = "此副本您已加入 不可重複申請";
+    }
+    else {
+        hint.innerText = "申請成功 請等待隊長回應";
+    }
+});
+
