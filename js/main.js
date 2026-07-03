@@ -11,7 +11,7 @@ onAuthStateChanged(auth, (user) => {
     }
 });
 
-
+// ----------物件取得----------
 const editBtn = document.getElementById("edit-btn");
 const editModal = document.getElementById("edit-modal");
 const createQuest = document.getElementById("create-quest");
@@ -22,9 +22,10 @@ const joinQuest = document.getElementById("join-quest");
 const joinModal = document.getElementById("join-modal");
 
 
-function showRoomList(rooms) {
-    if (!auth.currentUser) return;
+// ----------函式定義----------
 
+// 顯示副本列表  輸入:資料庫rooms集合內所有文件
+function showRoomList(rooms) {
     const uid = auth.currentUser.uid;
 
     itemArea.innerHTML = rooms
@@ -43,23 +44,31 @@ function showRoomList(rooms) {
 }
 
 
+// ----------執行程式----------
 const rooms = await room.getRoomList();
 showRoomList(rooms);    
 
+
+// ----------事件監聽----------
+
+// 點擊開啟編輯modal
 editBtn.addEventListener("click", function(){
     editModal.classList.remove("hidden");
 })
 
+// 點擊關閉編輯modal
 editModal.addEventListener("click", function (e) {
     if (e.target === editModal) {
         editModal.classList.add("hidden");
     }
 });
 
+// 點擊開啟新增副本modal
 createQuest.addEventListener("click", function(){
    createModal.classList.remove("hidden");
 })
 
+// 點擊關閉新增副本modal
 createModal.addEventListener("click", function (e) {
     if (e.target === createModal) {
         createModal.classList.add("hidden");
@@ -67,6 +76,7 @@ createModal.addEventListener("click", function (e) {
     }
 });
 
+// 點擊執行新增副本動作
 createQuestBtn.addEventListener("click", async function(){
     const nameInput = document.getElementById("create-quest-name");
     const descInput = document.getElementById("create-quest-description");
@@ -75,10 +85,9 @@ createQuestBtn.addEventListener("click", async function(){
     const desc = descInput.value;
     const date = dateInput.value;
 
-    const user = auth.currentUser.uid;
-    const userName = auth.currentUser.displayName;
+    const userUid = auth.currentUser.uid;
 
-    await room.createRoom(name, desc, date, user, userName);
+    await room.createRoom(name, desc, date, userUid);
     createModal.classList.add("hidden");
     editModal.classList.add("hidden");
     const rooms = await room.getRoomList();
@@ -89,10 +98,12 @@ createQuestBtn.addEventListener("click", async function(){
     dateInput.value = "2007-08-21";
 })
 
+// 點擊開啟加入副本modal
 joinQuest.addEventListener("click", function(){
    joinModal.classList.remove("hidden");
 })
 
+// 點擊關閉加入副本modal
 joinModal.addEventListener("click", function (e) {
     if (e.target === joinModal) {
         joinModal.classList.add("hidden");
@@ -100,6 +111,7 @@ joinModal.addEventListener("click", function (e) {
     }
 });
 
+// 點擊進入副本頁面
 itemArea.addEventListener("click", function (e) {
     const item = e.target.closest(".item");
     if (!item) return;
