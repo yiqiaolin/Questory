@@ -102,5 +102,5 @@ export async function joinRoom(roomId, userUid){
             status: "pending"
         })
     });
-    return 2;
+    return 3;
 }
