@@ -39,7 +39,7 @@ async function loadMemberList(members){
 
     const membersWithName = await Promise.all(
         members.map(async (member) => {
-            const name = await user.UidToName(member.uid);
+            const name = await user.uidGetName(member.uid);
             return {
                 ...member,
                 name

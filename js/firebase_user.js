@@ -16,15 +16,15 @@ export async function createUserIfNotExist(user) {
             name: user.displayName,
             email: user.email,
             createdAt: Date.now(),
-            level: 0,
+            level: 1,
             title:[],
             exp:0
         });
     }
 }
 
-// uid查詢name 輸入:uid 輸出:name 
-export async function UidToName(uid) {
+// 取得輸入uid之name  輸入:uid 輸出:name 
+export async function uidGetName(uid) {
     const ref = doc(db, "users", uid);
     const snap = await getDoc(ref);
     if (snap.exists()){
@@ -32,4 +32,15 @@ export async function UidToName(uid) {
         return userData.name;
     }
     return null;
+}
+
+// 取得輸入uid之level  輸入:uid 輸出:level
+export async function uidGetLevel(uid) {
+    const ref = doc(db, "users", uid);
+    const snap = await getDoc(ref);
+    if (!(snap.exists())){
+        return null;
+    }
+    const userData = snap.data();
+    return userData.level;
 }

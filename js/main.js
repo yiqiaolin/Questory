@@ -2,6 +2,7 @@ import { auth } from "./firebase.js";
 import { onAuthStateChanged } 
 from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 import * as room from "./firebase_room.js";
+import * as user from "./firebase_user.js";
 
 
 // 確認登入
@@ -21,6 +22,8 @@ const itemArea = document.getElementById("item-area");
 const joinQuest = document.getElementById("join-quest");
 const joinModal = document.getElementById("join-modal");
 const joinQuestBtn = document.getElementById("join-quest-btn");
+const userName = document.getElementById("user-name");
+const userLevel = document.getElementById("user-level");
 
 
 // ----------函式定義----------
@@ -31,7 +34,7 @@ function showRoomList(rooms) {
     if (!uid) return;
 
     itemArea.innerHTML = rooms
-        .filter(room => room.owner === uid)
+        .filter(room =>room.members.some(member => member.uid === uid))
         .sort((a, b) => new Date(b.date) - new Date(a.date)) 
         .map(room => `
             <div class="item" data-id="${room.id}">
@@ -49,6 +52,10 @@ function showRoomList(rooms) {
 // ----------執行程式----------
 const rooms = await room.getRoomList();
 showRoomList(rooms);    
+const name = await user.uidGetName(auth.currentUser.uid);
+userName.innerText = name;
+const level = await user.uidGetLevel(auth.currentUser.uid);
+userLevel.innerText = `Lv. ${level}`;
 
 
 // ----------事件監聽----------

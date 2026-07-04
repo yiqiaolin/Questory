@@ -145,3 +145,14 @@ body{
 .hidden {
     display: none;
 }
+
+#desc-area{
+    width: 70vw;
+    padding: 10px;
+    margin: 5px auto 50px auto;
+}
+
+#desc-area p{
+    font-size: 14px;
+    color: #626161;
+}
