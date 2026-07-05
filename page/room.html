@@ -59,5 +59,30 @@
         <button id="bottom-btn"></button>
     </div>
 
+    <div id="edit-modal" class="modal hidden">
+        <div id="edit-modal-content">
+            <div id="edit-area">
+                <input type="text" placeholder="副本名稱">
+                <hr/>
+                <div id="type-area">
+                    <p>類型</p>
+                    <div id="btn-area">
+                        <button>主線</button>
+                        <button>支線</button>
+                    </div>
+                </div>
+                <hr/>
+                <div id="reward-area">
+                    <p>獎勵</p>
+                    <p id="reward-values">EXP</p>
+                </div>
+                <hr/>
+                <p>任務描述</p>
+                <textarea></textarea>
+            </div>
+            <button id="add-btn">新增任務</button>
+        </div>
+    </div>
+
     <script type="module" src="../js/room.js"></script>
 </body>

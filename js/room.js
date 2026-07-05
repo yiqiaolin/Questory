@@ -15,6 +15,8 @@ const memberMemberArea = document.getElementById("member-member-area");
 const questCode = document.getElementById("quest-code");
 const descAreaP = document.querySelector("#desc-area p");
 const bottomBtn = document.getElementById("bottom-btn");
+const editBtn = document.getElementById("edit-btn");
+const editModal = document.getElementById("edit-modal");
 
 
 // ----------函式定義----------
@@ -175,3 +177,15 @@ bottomBtn.addEventListener("click", async function() {
         window.location.href = "../page/main.html";
     }
 })
+
+// 點擊開啟編輯modal
+editBtn.addEventListener("click", function(){
+    editModal.classList.remove("hidden");
+})
+
+// 點擊關閉編輯modal
+editModal.addEventListener("click", function (e) {
+    if (e.target === editModal) {
+        editModal.classList.add("hidden");
+    }
+});
