@@ -1,16 +1,8 @@
 import { auth } from "./firebase.js";
 import { onAuthStateChanged } 
 from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
-import * as room from "./firebase_room.js";
-import * as user from "./firebase_user.js";
-
-
-// 確認登入
-onAuthStateChanged(auth, (user) => {
-    if (!user) {
-        window.location.href = "../index.html";
-    }
-});
+import * as roomApi from "./firebase_room.js";
+import * as userApi from "./firebase_user.js";
 
 // ----------物件取得----------
 const editBtn = document.getElementById("edit-btn");
@@ -50,12 +42,21 @@ function showRoomList(rooms) {
 
 
 // ----------執行程式----------
-const rooms = await room.getRoomList();
-showRoomList(rooms);    
-const name = await user.uidGetName(auth.currentUser.uid);
-userName.innerText = name;
-const level = await user.uidGetLevel(auth.currentUser.uid);
-userLevel.innerText = `Lv. ${level}`;
+
+// 確認登入
+onAuthStateChanged(auth,  async (user) => {
+    if (!user) {
+        window.location.href = "../index.html";
+        return;
+    }
+
+    const rooms = await roomApi.getRoomList();
+    showRoomList(rooms);    
+    const name = await userApi.uidGetName(user.uid);
+    userName.innerText = name;
+    const level = await userApi.uidGetLevel(user.uid);
+    userLevel.innerText = `Lv. ${level}`;
+});
 
 
 // ----------事件監聽----------
@@ -96,10 +97,10 @@ createQuestBtn.addEventListener("click", async function(){
 
     const userUid = auth.currentUser.uid;
 
-    await room.createRoom(name, desc, date, userUid);
+    await roomApi.createRoom(name, desc, date, userUid);
     createModal.classList.add("hidden");
     editModal.classList.add("hidden");
-    const rooms = await room.getRoomList();
+    const rooms = await roomApi.getRoomList();
     showRoomList(rooms);
 
     nameInput.value = "";
@@ -139,7 +140,7 @@ joinQuestBtn.addEventListener("click", async function() {
     const codeId = document.getElementById("code-id");
     let code = codeId.value;
     const userUid = auth.currentUser.uid;
-    let result = await room.joinRoom(code, userUid);
+    let result = await roomApi.joinRoom(code, userUid);
     if (!result){
         hint.innerText = "此副本Code不存在";
     }

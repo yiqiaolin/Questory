@@ -75,7 +75,7 @@ export async function deleteMember(roomId, targetUid) {
 
     // 這裡會回傳新的members陣列並放到updatedMembers
     const updatedMembers = members.filter(member => {
-        return member.uid !== targetUid;
+        return member.uid !== targetUid;u
     });
 
     await updateDoc(ref, {
@@ -84,7 +84,7 @@ export async function deleteMember(roomId, targetUid) {
 }
 
 // 申請加入副本 新增資料庫members欄位  輸入:欲申請副本ID、申請人ID 輸出:找不到副本輸出null 已加入輸出1
-export async function joinRoom(roomId, userUid){
+export async function joinRoom(roomId, targetUid){
     const ref = doc(db, "rooms", roomId);
     const snap = await getDoc(ref);
     if (!snap.exists()) {
@@ -92,15 +92,53 @@ export async function joinRoom(roomId, userUid){
     }
 
     const members = snap.data().members;
-    const isMember = members.some(m => m.uid === userUid);
+    const isMember = members.some(m => m.uid === targetUid);
     if (isMember){
         return 1;
     }
     await updateDoc(ref, {
         members: arrayUnion({
-            uid: userUid,
+            uid: targetUid,
             status: "pending"
         })
     });
-    return 3;
+    return 2;
+}
+
+// 取得副本擁有者資訊  輸入:副本ID
+export async function getOwner(roomId){
+    const ref = doc(db, "rooms", roomId);
+    const snap = await getDoc(ref);
+    if (!snap.exists()) {
+        return null;
+    }
+
+    const owner = snap.data().owner;
+    return owner;
+}
+
+// 取得副本描述資訊  輸入:副本ID
+export async function getDesc(roomId){
+    const ref = doc(db, "rooms", roomId);
+    const snap = await getDoc(ref);
+    if (!snap.exists()) {
+        return null;
+    }
+
+    const desc = snap.data().description;
+    return desc;
+}
+
+// 退出副本 移除資料庫members對應欄位  輸入:欲退出副本ID、退出人ID
+export async function exitRoom(roomId, targetUid){
+    const ref = doc(db, "rooms", roomId);
+    const snap = await getDoc(ref);
+    if (!snap.exists()) {
+        return null;
+    }
+    const members = snap.data().members;
+    const updatedMembers = members.filter(member => member.uid !== targetUid);
+    await updateDoc(ref, {
+        members: updatedMembers
+    });
 }
