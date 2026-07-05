@@ -102,7 +102,7 @@ export async function joinRoom(roomId, targetUid){
             status: "pending"
         })
     });
-    return 2;
+    return 3;
 }
 
 // 取得副本擁有者資訊  輸入:副本ID
