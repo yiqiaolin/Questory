@@ -62,13 +62,13 @@
     <div id="edit-modal" class="modal hidden">
         <div id="edit-modal-content">
             <div id="edit-area">
-                <input type="text" placeholder="副本名稱">
+                <input type="text" placeholder="副本名稱" id="task-name">
                 <hr/>
                 <div id="type-area">
                     <p>類型</p>
                     <div id="btn-area">
-                        <button>主線</button>
-                        <button>支線</button>
+                        <button id="main-task-btn">主線</button>
+                        <button id="side-task-btn">支線</button>
                     </div>
                 </div>
                 <hr/>
@@ -78,7 +78,7 @@
                 </div>
                 <hr/>
                 <p>任務描述</p>
-                <textarea></textarea>
+                <textarea id="task-desc"></textarea>
             </div>
             <button id="add-btn">新增任務</button>
         </div>

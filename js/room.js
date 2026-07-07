@@ -3,10 +3,17 @@ import { onAuthStateChanged }
 from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 import * as roomApi from "./firebase_room.js";
 import * as userApi from "./firebase_user.js";
+import * as taskApi from "./firebase_task.js";
 
 // 透過網址取得當前的room id
 const params = new URLSearchParams(window.location.search);
 const roomId = params.get("id");
+
+
+// ----------常數/變數----------
+let createTaskType = "";
+const baseExp = 100;
+let exp = 0;
 
 
 // ----------物件取得----------
@@ -17,6 +24,12 @@ const descAreaP = document.querySelector("#desc-area p");
 const bottomBtn = document.getElementById("bottom-btn");
 const editBtn = document.getElementById("edit-btn");
 const editModal = document.getElementById("edit-modal");
+const mainTaskBtn = document.getElementById("main-task-btn");
+const sideTaskBtn = document.getElementById("side-task-btn");
+const rewardValues = document.getElementById("reward-values");
+const addBtn = document.getElementById("add-btn");
+const taskName = document.getElementById("task-name");
+const taskDesc = document.getElementById("task-desc");
 
 
 // ----------函式定義----------
@@ -28,7 +41,7 @@ async function loadRoom(isOwner) {
     questTitle.textContent = roomData.name;
     questCode.textContent = roomData.id;
     loadMemberList(roomData.members, isOwner);
-}
+};
 
 // 載入副本成員列表  輸入:副本members欄位資料 是否是擁有者
 async function loadMemberList(members, isOwner){
@@ -85,7 +98,7 @@ async function loadMemberList(members, isOwner){
         `)
         .join("");
     }
-}
+};
 
 // 判斷當前使用者是否是副本擁有者  輸入:副本ID 使用者ID 輸出:是->true 否->false
 async function isOwner(roomId, uid){
@@ -94,7 +107,7 @@ async function isOwner(roomId, uid){
         return true;
     }
     return false;
-}
+};
 
 // 切換頁面視角  輸入:是否是擁有者
 async function switchView(isOwner){
@@ -116,7 +129,21 @@ async function switchView(isOwner){
             element.classList.remove("hidden");
         });
     }
-}
+};
+
+// 顯示獎勵值  輸入:當前經驗值
+function showRewardValues(exp){
+    rewardValues.innerText = `${exp} EXP`
+};
+
+// 恢復編輯任務modal
+function resetTaskModal(){
+    taskName.value = "";
+    taskDesc.value = "";
+    mainTaskBtn.classList.remove("selected");
+    sideTaskBtn.classList.remove("selected");
+    rewardValues.innerText = "EXP"
+};
 
 
 // ----------執行程式----------
@@ -187,5 +214,33 @@ editBtn.addEventListener("click", function(){
 editModal.addEventListener("click", function (e) {
     if (e.target === editModal) {
         editModal.classList.add("hidden");
+        resetTaskModal();
     }
+});
+
+// 點擊選擇任務類型為主線並更新獎勵數值
+mainTaskBtn.addEventListener("click", function(){
+    mainTaskBtn.classList.add("selected");
+    sideTaskBtn.classList.remove("selected");
+    createTaskType = "main";
+    exp = baseExp * 1.5;
+    showRewardValues(exp);
+});
+
+// 點擊選擇任務類型為支線並更新獎勵數值
+sideTaskBtn.addEventListener("click", function(){
+    sideTaskBtn.classList.add("selected");
+    mainTaskBtn.classList.remove("selected");
+    createTaskType = "side";
+    exp = baseExp * 1.2;
+    showRewardValues(exp);
+});
+
+// 點擊新增任務
+addBtn.addEventListener("click", async function(){
+    let name = taskName.value;
+    let desc = taskDesc.value;
+    await taskApi.createTask(name, createTaskType, exp, desc);
+    editModal.classList.add("hidden");
+    resetTaskModal();
 });
