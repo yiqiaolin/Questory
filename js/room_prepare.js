@@ -190,7 +190,7 @@ onAuthStateChanged(auth, async(user) => {
 // ----------事件監聽----------
 
 // 點擊加入/移除按鈕變更資料庫內容並更新畫面
-memberMemberArea.addEventListener("click", async function (e){
+ownerMemberArea.addEventListener("click", async function (e){
     if (e.target.classList.contains("add-member-btn")) {
         const uid = e.target.dataset.id;
         await roomApi.acceptMember(roomId, uid);
