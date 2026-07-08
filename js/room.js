@@ -14,6 +14,7 @@ const roomId = params.get("id");
 let createTaskType = "";
 const baseExp = 100;
 let exp = 0;
+let currentIsOwner;
 
 
 // ----------物件取得----------
@@ -30,6 +31,7 @@ const rewardValues = document.getElementById("reward-values");
 const addBtn = document.getElementById("add-btn");
 const taskName = document.getElementById("task-name");
 const taskDesc = document.getElementById("task-desc");
+const taskArea = document.getElementById("task-area");
 
 
 // ----------函式定義----------
@@ -41,12 +43,11 @@ async function loadRoom(isOwner) {
     questTitle.textContent = roomData.name;
     questCode.textContent = roomData.id;
     loadMemberList(roomData.members, isOwner);
+    loadTaskList(roomData.tasks);
 };
 
 // 載入副本成員列表  輸入:副本members欄位資料 是否是擁有者
 async function loadMemberList(members, isOwner){
-    const memberArea = document.getElementById("member-area");
-
     const membersWithName = await Promise.all(
         members.map(async (member) => {
             const name = await userApi.uidGetName(member.uid);
@@ -99,6 +100,23 @@ async function loadMemberList(members, isOwner){
         .join("");
     }
 };
+
+// 載入副本任務列表  輸入:副本tasks欄位資料
+async function loadTaskList(tasks){
+    const tasksWithName = await Promise.all(
+        tasks.map(async (task) => {
+            const name = await taskApi.idGetName(task);
+            return name;
+        })
+    );
+    taskArea.innerHTML = tasksWithName.map(task => `
+        <div class="task-item">
+            <p class="task-item-name">${task}</p>
+            <hr/>
+        </div>
+    `)
+    .join("");
+}
 
 // 判斷當前使用者是否是副本擁有者  輸入:副本ID 使用者ID 輸出:是->true 否->false
 async function isOwner(roomId, uid){
@@ -155,10 +173,10 @@ onAuthStateChanged(auth, async(user) => {
         return;
     }
 
-    const result = await isOwner(roomId, user.uid);
-    loadRoom(result);
-    switchView(result);
-    if(result){
+    currentIsOwner = await isOwner(roomId, user.uid);
+    loadRoom(currentIsOwner);
+    switchView(currentIsOwner);
+    if(currentIsOwner){
         bottomBtn.innerText = "開始副本";
     }
     else{
@@ -183,7 +201,7 @@ memberMemberArea.addEventListener("click", async function (e){
     if (e.target.classList.contains("delete-member-btn")) {
         const uid = e.target.dataset.id;
         await roomApi.deleteMember(roomId, uid);
-        loadRoom();
+        loadRoom(currentIsOwner);
     }
 });
 
@@ -240,7 +258,9 @@ sideTaskBtn.addEventListener("click", function(){
 addBtn.addEventListener("click", async function(){
     let name = taskName.value;
     let desc = taskDesc.value;
-    await taskApi.createTask(name, createTaskType, exp, desc);
+    const taskId = await taskApi.createTask(name, createTaskType, exp, desc);
+    await roomApi.addTaskToRoom(roomId, taskId);
     editModal.classList.add("hidden");
     resetTaskModal();
+    loadRoom(currentIsOwner);
 });

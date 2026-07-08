@@ -12,7 +12,7 @@ export async function createRoom(name, description, date, userUid) {
     status: "prepare",
     owner: userUid,
     members: [{uid: userUid, status: "accepted"}],
-    task: []
+    tasks: []
   });
 }
 
@@ -140,5 +140,13 @@ export async function exitRoom(roomId, targetUid){
     const updatedMembers = members.filter(member => member.uid !== targetUid);
     await updateDoc(ref, {
         members: updatedMembers
+    });
+}
+
+// 新增任務ID到房間任務列表  輸入:副本ID、任務ID
+export async function addTaskToRoom(roomId, taskId){
+    const ref = doc(db, "rooms", roomId);
+    await updateDoc(ref, {
+        tasks: arrayUnion(taskId)
     });
 }
