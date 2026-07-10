@@ -32,6 +32,7 @@ const addBtn = document.getElementById("add-btn");
 const taskName = document.getElementById("task-name");
 const taskDesc = document.getElementById("task-desc");
 const taskArea = document.getElementById("task-area");
+const addTaskHint = document.getElementById("add-task-hint");
 
 
 // ----------函式定義----------
@@ -158,6 +159,7 @@ function showRewardValues(exp){
 function resetTaskModal(){
     taskName.value = "";
     taskDesc.value = "";
+    exp = 0;
     mainTaskBtn.classList.remove("selected");
     sideTaskBtn.classList.remove("selected");
     rewardValues.innerText = "EXP"
@@ -232,6 +234,7 @@ editBtn.addEventListener("click", function(){
 editModal.addEventListener("click", function (e) {
     if (e.target === editModal) {
         editModal.classList.add("hidden");
+        addTaskHint.classList.add("hidden");
         resetTaskModal();
     }
 });
@@ -256,11 +259,16 @@ sideTaskBtn.addEventListener("click", function(){
 
 // 點擊新增任務
 addBtn.addEventListener("click", async function(){
-    let name = taskName.value;
-    let desc = taskDesc.value;
+    let name = taskName.value.trim();
+    let desc = taskDesc.value.trim();
+    if(name === "" || desc === "" || exp === 0){
+        addTaskHint.classList.remove("hidden");
+        return 0;
+    }
     const taskId = await taskApi.createTask(name, createTaskType, exp, desc);
     await roomApi.addTaskToRoom(roomId, taskId);
     editModal.classList.add("hidden");
+    addTaskHint.classList.add("hidden");
     resetTaskModal();
     loadRoom(currentIsOwner);
 });

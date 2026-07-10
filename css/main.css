@@ -175,6 +175,13 @@
     padding: 5px;
 }
 
+#create-quest-hint{
+    font-size: 12px;
+    margin-top: 3px;
+    margin-left: 10px;
+    color: #6b9fde;
+}
+
 #create-quest-date{
     color: #626161;
 }

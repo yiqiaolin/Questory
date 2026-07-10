@@ -16,6 +16,10 @@ const joinModal = document.getElementById("join-modal");
 const joinQuestBtn = document.getElementById("join-quest-btn");
 const userName = document.getElementById("user-name");
 const userLevel = document.getElementById("user-level");
+const nameInput = document.getElementById("create-quest-name");
+const descInput = document.getElementById("create-quest-description");
+const dateInput = document.getElementById("create-quest-date");
+const createQuestHint = document.getElementById("create-quest-hint");
 
 
 // ----------函式定義----------
@@ -83,23 +87,25 @@ createModal.addEventListener("click", function (e) {
     if (e.target === createModal) {
         createModal.classList.add("hidden");
         editModal.classList.add("hidden");
+        createQuestHint.classList.add("hidden");
     }
 });
 
 // 點擊執行新增副本動作
 createQuestBtn.addEventListener("click", async function(){
-    const nameInput = document.getElementById("create-quest-name");
-    const descInput = document.getElementById("create-quest-description");
-    const dateInput = document.getElementById("create-quest-date");
-    const name = nameInput.value;
-    const desc = descInput.value;
+    const name = nameInput.value.trim();
+    const desc = descInput.value.trim();
     const date = dateInput.value;
 
     const userUid = auth.currentUser.uid;
-
+    if(name === "" || desc === ""){
+        createQuestHint.classList.remove("hidden");
+        return 0;
+    }
     await roomApi.createRoom(name, desc, date, userUid);
     createModal.classList.add("hidden");
     editModal.classList.add("hidden");
+    createQuestHint.classList.add("hidden");
     const rooms = await roomApi.getRoomList();
     showRoomList(rooms);
 
