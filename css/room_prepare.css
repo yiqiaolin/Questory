@@ -1,5 +1,6 @@
 body{
     padding-top: 100px;
+    margin-top: 20px;
     padding-bottom: 15dvh;
 }
 #fixed-top{
@@ -14,20 +15,23 @@ body{
 }
 
 #fixed-top-container{
-    display: flex;
-    
+    flex: 1;
+    min-width: 0;
 }
 
 #quest-title{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     font-size: 24px;
     margin-top: 40px;
     margin-left: 40px;
 }
 
 #quest-code{
-    font-size: 10px;
-    margin-top: 60px;
-    margin-left: 30px;
+    font-size: 8px;
+    margin-top: 10px;
+    margin-left: 40px;
 }
 
 #edit-btn{
