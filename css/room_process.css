@@ -21,7 +21,7 @@
     display: flex;
     justify-content: space-between;
     padding-bottom: 15px;
-    height: 10dvh;
+    height: 15dvh;
 }
 
 #quest-title{
@@ -48,8 +48,8 @@
 #ranking-area{
     border: 1px solid #626161;
     margin-left: 40px;
-    margin-right: 20px;
-    height: 12dvh;
+    margin-right: 1dvh;
+    height: 20dvh;
     border-radius: 15px;
     flex: 1;
     display: flex;
@@ -91,9 +91,9 @@
 
 #total-area{
     border: 1px solid #626161;
-    margin-left: 20px;
+    margin-left: 1dvh;
     margin-right: 40px;
-    height: 12dvh;
+    height: 20dvh;
     border-radius: 15px;
     flex: 1;
     display: flex;
@@ -126,7 +126,7 @@
     margin-left: 40px;
     margin-right: 40px;
     height: 25vh;
-    margin-top: 40px;
+    margin-top: 2dvh;
     border-radius: 15px;
     display: flex;
     flex-direction: column;
@@ -173,7 +173,7 @@
     margin-left: 40px;
     margin-right: 40px;
     height: 25vh;
-    margin-top: 40px;
+    margin-top: 2dvh;
     border-radius: 15px;
     display: flex;
     flex-direction: column;
@@ -216,7 +216,7 @@
     margin-left: 40px;
     margin-right: 40px;
     height: 8vh;
-    margin-top: 40px;
+    margin-top: 2dvh;
     border-radius: 15px;
     display: flex;
     flex-direction: column;
