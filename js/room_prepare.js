@@ -217,7 +217,8 @@ questCode.addEventListener("click", async function() {
 bottomBtn.addEventListener("click", async function() {
     const result = await isOwner(roomId, auth.currentUser.uid);
     if(result){
-
+        await roomApi.PrepareToProcess(roomId);
+        window.location.href = `room_process.html?id=${roomId}`;
     }
     else{
         await roomApi.exitRoom(roomId, auth.currentUser.uid);

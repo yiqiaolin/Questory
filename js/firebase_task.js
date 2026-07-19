@@ -24,3 +24,14 @@ export async function idGetName(id){
     }
     return null;
 }
+
+// 取得輸入任務ID之任務類型  輸入:任務ID 輸出:任務類型
+export async function idGetType(id){
+    const ref = doc(db, "tasks", id);
+    const snap = await getDoc(ref);
+    if (snap.exists()){
+        const taskData = snap.data();
+        return taskData.type;
+    }
+    return null;
+}

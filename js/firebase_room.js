@@ -150,3 +150,29 @@ export async function addTaskToRoom(roomId, taskId){
         tasks: arrayUnion(taskId)
     });
 }
+
+// 取得副本擁有者資訊  輸入:副本ID
+export async function getStatus(roomId){
+    const ref = doc(db, "rooms", roomId);
+    const snap = await getDoc(ref);
+    if (!snap.exists()) {
+        return null;
+    }
+
+    const status = snap.data().status;
+    return status;
+}
+
+// 變更房間狀態prepare->process  輸入:副本ID
+export async function PrepareToProcess(roomId){
+    const ref = doc(db, "rooms", roomId);
+    const snap = await getDoc(ref);
+    if (!snap.exists()) {
+        return null;
+    }
+    let status = snap.data().status;
+    status = "process";
+    await updateDoc(ref, {
+        status: status
+    });
+}

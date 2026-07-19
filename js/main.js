@@ -133,11 +133,17 @@ joinModal.addEventListener("click", function (e) {
 });
 
 // 點擊進入副本頁面
-itemArea.addEventListener("click", function (e) {
+itemArea.addEventListener("click", async function (e) {
     const item = e.target.closest(".item");
     if (!item) return;
     const roomId = item.dataset.id;
-    window.location.href = `room_prepare.html?id=${roomId}`;
+    const status = await roomApi.getStatus(roomId);
+    if (status === "prepare"){
+        window.location.href = `room_prepare.html?id=${roomId}`;
+    }
+    else if (status === "process"){
+        window.location.href = `room_process.html?id=${roomId}`;
+    }
 });
 
 // 點擊執行申請加入副本動作
