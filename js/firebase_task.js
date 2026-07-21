@@ -35,3 +35,18 @@ export async function idGetType(id){
     }
     return null;
 }
+
+// 取得單筆任務資料  輸入:任務ID 輸出:任務資料物件
+export async function getTaskData(taskId) {
+    const ref = doc(db, "tasks", taskId);
+    const snap = await getDoc(ref);
+
+    if (!snap.exists()) {
+        return null;
+    }
+
+    return {
+        id: snap.id,
+        ...snap.data()
+    };
+}

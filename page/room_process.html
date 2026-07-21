@@ -72,20 +72,6 @@
             <hr>
         </div>
         <div id="todo-container">
-            <div class="todo-item">
-                <div class="todo-item-text">
-                    <p  class="todo-item-name">任務名稱</p>
-                    <p class="todo-item-state">任務狀態</p>
-                </div>
-                <hr>
-            </div>
-            <div class="todo-item">
-                <div class="todo-item-text">
-                    <p  class="todo-item-name">任務名稱</p>
-                    <p class="todo-item-state">任務狀態</p>
-                </div>
-                <hr>
-            </div>
         </div>
     </div>
 
@@ -116,5 +102,27 @@
             </div>
         </div>
     </div>
+
+
+    <div id="task-modal" class="center-modal hidden">
+        <div id="task-modal-content">
+            <div id="task-modal-top-block">
+                <p id="task-modal-name">任務名稱</p>
+                <p id="task-modal-type">類型</p>
+            </div>
+            <div id="task-modal-desc-block">
+                <p>任務描述</p>
+                <hr/>
+                <p>描述內容</p>
+            </div>
+            <div id="task-modal-reward-block">
+                <p>獎勵</p>
+                <hr/>
+                <p id="task-modal-exp">10 EXP</p>
+            </div>
+            <button class="task-modal-btn">接任務</button>
+        </div>
+    </div>
+
     <script type="module" src="../js/room_process.js"></script>
 </body>

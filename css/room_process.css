@@ -268,7 +268,7 @@ body{
 }
 
 
-
+/* owner modal */
 
 .modal{
     position: fixed;
@@ -280,10 +280,6 @@ body{
 
     display: flex;
     align-items: flex-end;
-}
-
-.hidden {
-    display: none;
 }
 
 #owner-modal-content{
@@ -312,4 +308,112 @@ body{
 .text-area hr{
     width: 75vw;
     color: #626161;
+}
+
+
+
+/* task modal */
+
+.center-modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100dvh;
+    background: rgba(0,0,0,0.5);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#task-modal-content{
+    background: #EDEBEB;
+    border-radius: 15px;
+    width: 90vw;
+    height: 45dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#task-modal-top-block{
+    width: 85%;
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+}
+
+#task-modal-name{
+    font-size: 20px;
+    color: #626161;
+    margin-top: 25px;
+}
+
+
+#task-modal-type{
+    width: 40px;
+    height: 18px;
+    margin-top: 35px;
+    border-radius: 5px;
+    background-color: #c1c1c1;
+    font-size: 12px;
+    color: #000000;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+#task-modal-content hr{
+    width: 100%;
+    color: #626161;
+}
+
+#task-modal-desc-block{
+    width: 85%;
+    flex: 3;
+}
+
+#task-modal-desc-block p{
+    font-size: 12px;
+    color: #626161;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#task-modal-reward-block{
+    width: 85%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+#task-modal-reward-block p{
+    font-size: 12px;
+    color: #626161;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#task-modal-exp{
+    align-self: flex-end;
+}
+
+#task-modal-content button{
+    width: 70%;
+    height: 40px;
+    background-color: #c1c1c1;
+    border-radius: 5px;
+    color: #626161;
+    font-size: 20px;
+    margin-bottom: 40px;
+}
+
+
+
+
+
+.hidden {
+    display: none;
 }

@@ -18,7 +18,7 @@ export async function createUserIfNotExist(user) {
             createdAt: Date.now(),
             level: 1,
             title:[],
-            exp:0
+            exp:0,
         });
     }
 }
