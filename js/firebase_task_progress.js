@@ -22,11 +22,12 @@ export async function createTaskProgress(roomId, taskId, uid) {
     });
 }
 
-// 取得當前使用者的待辦清單  輸入:使用者ID 輸出:文件物件
-export async function getTaskProgress(userId){
+// 取得當前使用者的待辦清單  輸入:使用者ID 房間ID 輸出:文件物件
+export async function getTaskProgress(userId, roomId){
     const q = query(
         collection(db, "task_progress"),
-        where("uid", "==", userId)
+        where("uid", "==", userId),
+        where("roomId", "==", roomId)
     );
 
     const snap = await getDocs(q);

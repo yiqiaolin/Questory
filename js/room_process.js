@@ -38,8 +38,12 @@ async function loadRoom(isOwner) {
 
 // 載入副本任務列表  輸入:副本tasks欄位資料
 async function loadTaskList(tasks){
+    const progress = await taskProgressApi.getTaskProgress(currentUserUid, roomId);
+    const acceptedTaskIds = progress.map(item => item.taskId);
+    const availableTasks = tasks.filter(taskId => !acceptedTaskIds.includes(taskId));
+
     const tasksWithNameAndType = await Promise.all(
-        tasks.map(async (taskId) => {
+        availableTasks.map(async (taskId) => {
             const name = await taskApi.idGetName(taskId);
             const type = await taskApi.idGetType(taskId);
             return [taskId, name, type];
@@ -59,7 +63,7 @@ async function loadTaskList(tasks){
 
 // 載入副本待辦列表
 async function loadTodoList(){
-    const todoDoc = await taskProgressApi.getTaskProgress(currentUserUid);    
+    const todoDoc = await taskProgressApi.getTaskProgress(currentUserUid, roomId);    
     let todoData = todoDoc.map((doc)=>{
         if (doc.status === "in_progress"){
             doc.status = "進行中";
