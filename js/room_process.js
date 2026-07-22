@@ -5,6 +5,8 @@ import * as roomApi from "./firebase_room.js";
 import * as userApi from "./firebase_user.js";
 import * as taskApi from "./firebase_task.js";
 import * as taskProgressApi from "./firebase_task_progress.js";
+import * as storageApi from "./firebase_storage.js";
+
 
 // 透過網址取得當前的room id
 const params = new URLSearchParams(window.location.search);
@@ -23,6 +25,14 @@ const taskContainer = document.getElementById("task-container");
 const taskModal = document.getElementById("task-modal");
 const taskModalBtn = document.getElementById("task-modal-btn");
 const todoContainer = document.getElementById("todo-container");
+const proofImageInput = document.getElementById("proof-image-input");
+const previewImage = document.getElementById("preview-image");
+const uploadText = document.getElementById("upload-text");
+const todoModalBtn = document.getElementById("todo-modal-btn");
+const todoModal = document.getElementById("todo-modal");
+const todoModalName = document.getElementById("todo-modal-name");
+const todoModalType = document.getElementById("todo-modal-type");
+const todoModalDesc = document.getElementById("todo-modal-desc");
 
 
 // ----------函式定義----------
@@ -78,10 +88,10 @@ async function loadTodoList(){
             doc.status = "任務失敗";
         }
 
-        return [doc.taskName, doc.status]
+        return [doc.taskName, doc.status, doc.taskId]
     });
     todoContainer.innerHTML = todoData.map(todo => `
-        <div class="todo-item">
+        <div class="todo-item" data-id="${todo[2]}">
             <div class="todo-item-text">
                 <p  class="todo-item-name">${todo[0]}</p>
                 <p class="todo-item-state">${todo[1]}</p>
@@ -175,4 +185,49 @@ taskModal.addEventListener("click", async function(e){
         loadTodoList()
         taskModal.classList.add("hidden");
     }
+});
+
+// 點擊開啟todo_modal並載入對應資料
+todoContainer.addEventListener("click", async function (e) {
+    const item = e.target.closest(".todo-item");
+    if (!item) return;
+    const taskId = item.dataset.id;
+    const taskData = await taskApi.getTaskData(taskId);
+    todoModalName.innerText = taskData.name;
+    todoModalType.innerText = taskData.type;
+    todoModalDesc.innerText = taskData.description;
+    todoModal.classList.remove("hidden");
+});
+
+// 點擊關閉todo_modal
+todoModal.addEventListener("click", function (e) {
+    if (e.target === todoModal) {
+        todoModal.classList.add("hidden");
+    }
+});
+
+// 點擊上傳照片並顯示
+proofImageInput.addEventListener("change", function(){
+    const file = this.files[0];
+    const url = URL.createObjectURL(file);
+    
+    previewImage.src = url;
+    previewImage.style.display="block";
+    uploadText.style.display="none";
+});
+
+// 點擊提交圖片
+todoModalBtn.addEventListener("click", async function(){
+    const file = proofImageInput.files[0];
+    if(!file){
+        alert("請選擇照片");
+        return;
+    }
+
+    const imageUrl = await storageApi.uploadTaskImage(file);
+    todoModal.classList.add("hidden");
+    proofImageInput.value = "";      
+    previewImage.style.display="";        
+    uploadText.style.display = "";
+
 });
