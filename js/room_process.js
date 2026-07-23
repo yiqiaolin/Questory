@@ -14,6 +14,9 @@ const roomId = params.get("id");
 
 
 // ----------常數/變數----------
+let createTaskType = "";
+const baseExp = 100;
+let exp = 0;
 let currentIsOwner;
 let currentUserUid;
 
@@ -33,6 +36,17 @@ const todoModal = document.getElementById("todo-modal");
 const todoModalName = document.getElementById("todo-modal-name");
 const todoModalType = document.getElementById("todo-modal-type");
 const todoModalDesc = document.getElementById("todo-modal-desc");
+const totalValue = document.getElementById("total-value");
+const questTitle = document.getElementById("quest-title");
+const addTaskModal = document.getElementById("add-task-modal");
+const addTaskModalAddTaskHint = document.getElementById("add-task-modal-add-task-hint");
+const taskName = document.getElementById("task-name");
+const addTaskModalTaskDesc = document.getElementById("add-task-modal-task-desc");
+const mainTaskBtn = document.getElementById("main-task-btn");
+const sideTaskBtn = document.getElementById("side-task-btn");
+const addTaskModalRewardValues = document.getElementById("add-task-modal-reward-values");
+const addTask = document.getElementById("add-task");
+const addTaskModalAddBtn = document.getElementById("add-task-modal-add-btn");
 
 
 // ----------函式定義----------
@@ -40,8 +54,8 @@ const todoModalDesc = document.getElementById("todo-modal-desc");
 // 取得副本資料並載入副本名
 async function loadRoom(isOwner) {
     let roomData = await roomApi.getRoomData(roomId);
-    const questTitle = document.getElementById("quest-title");
     questTitle.textContent = roomData.name;
+    totalValue.textContent = roomData.total;
     loadTaskList(roomData.tasks);
     loadTodoList()
 };
@@ -111,6 +125,30 @@ async function isOwner(roomId, uid){
     return false;
 };
 
+// 切換頁面視角  輸入:是否是擁有者
+async function switchView(isOwner){
+    if(isOwner){
+        ownerBtn.classList.remove("hidden");
+    }
+    else{
+        ownerBtn.classList.add("hidden");
+    }
+};
+
+// 顯示獎勵值  輸入:當前經驗值
+function showRewardValues(exp){
+    addTaskModalRewardValues.innerText = `${exp} EXP`
+};
+
+// 恢復add-task-modal
+function resetAddTaskModal(){
+    taskName.value = "";
+    addTaskModalTaskDesc.value = "";
+    exp = 0;
+    mainTaskBtn.classList.remove("selected");
+    sideTaskBtn.classList.remove("selected");
+    addTaskModalRewardValues.innerText = "EXP"
+};
 
 // ----------執行程式----------
 
@@ -124,6 +162,7 @@ onAuthStateChanged(auth,  async (user) => {
     currentUserUid = user.uid;
     currentIsOwner = await isOwner(roomId, user.uid);
     loadRoom(currentIsOwner);
+    switchView(currentIsOwner);
 });
 
 
@@ -182,7 +221,7 @@ taskModal.addEventListener("click", async function(e){
     if(e.target.classList.contains("task-modal-btn")){
         const taskId = e.target.dataset.id;
         await taskProgressApi.createTaskProgress(roomId, taskId, currentUserUid);
-        loadTodoList()
+        loadRoom(currentIsOwner);
         taskModal.classList.add("hidden");
     }
 });
@@ -230,4 +269,53 @@ todoModalBtn.addEventListener("click", async function(){
     previewImage.style.display="";        
     uploadText.style.display = "";
 
+});
+
+// 點擊開啟add-task-modal
+addTask.addEventListener("click", function(){
+    addTaskModal.classList.remove("hidden");
+    ownerModal.classList.add("hidden");
+})
+
+// 點擊關閉add-task-modal
+addTaskModal.addEventListener("click", function (e) {
+    if (e.target === addTaskModal) {
+        addTaskModal.classList.add("hidden");
+        addTaskModalAddTaskHint.classList.add("hidden");
+        resetAddTaskModal();
+    }
+});
+
+// 點擊選擇任務類型為主線並更新獎勵數值
+mainTaskBtn.addEventListener("click", function(){
+    mainTaskBtn.classList.add("selected");
+    sideTaskBtn.classList.remove("selected");
+    createTaskType = "main";
+    exp = baseExp * 1.5;
+    showRewardValues(exp);
+});
+
+// 點擊選擇任務類型為支線並更新獎勵數值
+sideTaskBtn.addEventListener("click", function(){
+    sideTaskBtn.classList.add("selected");
+    mainTaskBtn.classList.remove("selected");
+    createTaskType = "side";
+    exp = baseExp * 1.2;
+    showRewardValues(exp);
+});
+
+// 點擊新增任務
+addTaskModalAddBtn.addEventListener("click", async function(){
+    let name = taskName.value.trim();
+    let desc = addTaskModalTaskDesc.value.trim();
+    if(name === "" || desc === "" || exp === 0){
+        addTaskModalAddTaskHint.classList.remove("hidden");
+        return 0;
+    }
+    const taskId = await taskApi.createTask(name, createTaskType, exp, desc);
+    await roomApi.addTaskToRoom(roomId, taskId);
+    addTaskModal.classList.add("hidden");
+    addTaskModalAddTaskHint.classList.add("hidden");
+    resetAddTaskModal();
+    loadRoom(currentIsOwner);
 });

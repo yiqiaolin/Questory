@@ -12,7 +12,9 @@ export async function createRoom(name, description, date, userUid) {
     status: "prepare",
     owner: userUid,
     members: [{uid: userUid, status: "accepted"}],
-    tasks: []
+    tasks: [],
+    members_reward: [],
+    total: 0
   });
 }
 

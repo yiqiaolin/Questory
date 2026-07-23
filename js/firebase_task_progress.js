@@ -18,7 +18,8 @@ export async function createTaskProgress(roomId, taskId, uid) {
         taskId: taskId,
         uid: uid,
         taskName: taskName,
-        status: "in_progress"
+        status: "in_progress",
+        proofImages: []
     });
 }
 
