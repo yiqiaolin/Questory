@@ -1,3 +1,5 @@
+/* main */
+
 #user-container{
     display: flex;
     padding: 20px;
@@ -86,59 +88,22 @@
     margin: 5px auto;
 }
 
-.modal{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100dvh;
-    background: rgba(0,0,0,0.5);
 
-    display: flex;
-    align-items: flex-end;
-}
+/* edit modal */
 
 #edit-modal-content{
-    background: #EDEBEB;
-    border-radius: 10px 10px 0 0;
-    width: 100vw;
     height: 200px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+}
+
+
+/* create modal */
+
+#create-modal-content{
+    height: 75dvh;
 }
 
 .text-area{
     width: 75vw;
-}
-
-.text-area button{
-    margin-left: 20px;
-    margin-bottom: 5px;
-    margin-top: 25px;
-    font-size: 20px;
-    color: #626161;
-}
-
-.text-area hr{
-    width: 75vw;
-    color: #626161;
-}
-
-.hidden {
-    display: none;
-}
-
-#create-modal-content{
-    background: #EDEBEB;
-    border-radius: 10px 10px 0 0;
-    width: 100vw;
-    height: 75dvh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
 }
 
 .text-area input{
@@ -155,6 +120,10 @@
     margin-bottom: 2px;
 }
 
+#create-quest-date{
+    color: #626161;
+}
+
 #create-modal-content textarea {
     width: 75vw;
     height: 30%;
@@ -168,11 +137,7 @@
 
 #create-quest-btn{
     margin-top: 30px;
-    background: #c1c1c1;
-    font-size: 24px;
-    color: #626161;
     width: 85vw;
-    padding: 5px;
 }
 
 #create-quest-hint{
@@ -182,29 +147,17 @@
     color: #6b9fde;
 }
 
-#create-quest-date{
-    color: #626161;
-}
+
+/* join modal */
 
 #join-modal-content{
-    background: #EDEBEB;
     padding-top: 30px;
-    border-radius: 10px 10px 0 0;
-    width: 100vw;
     height: 40dvh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
 }
 
 #join-quest-btn{
     margin-top: 50px;
-    background: #c1c1c1;
-    font-size: 24px;
-    color: #626161;
     width: 85vw;
-    padding: 5px;
 }
 
 #hint{

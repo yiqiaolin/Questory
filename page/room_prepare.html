@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Questory</title>
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/room_prepare.css">
     <link rel="icon" href="data:,">
 </head>
@@ -51,29 +52,32 @@
         <button id="bottom-btn"></button>
     </div>
 
-    <div id="edit-modal" class="modal hidden">
-        <div id="edit-modal-content">
-            <div id="edit-area">
+
+<!--     add-task-modal     -->
+
+    <div id="add-task-modal" class="center-modal hidden">
+        <div id="add-task-modal-content" class="center-modal-content">
+            <div id="add-task-modal-edit-area">
                 <input type="text" placeholder="副本名稱" id="task-name">
                 <hr/>
-                <div id="type-area">
+                <div id="add-task-modal-type-area">
                     <p>類型</p>
                     <div id="btn-area">
-                        <button id="main-task-btn">主線</button>
-                        <button id="side-task-btn">支線</button>
+                        <button id="main-task-btn" class="task-type">主線</button>
+                        <button id="side-task-btn" class="task-type">支線</button>
                     </div>
                 </div>
                 <hr/>
-                <div id="reward-area">
+                <div id="add-task-modal-reward-area">
                     <p>獎勵</p>
-                    <p id="reward-values">EXP</p>
+                    <p id="add-task-modal-reward-values">EXP</p>
                 </div>
                 <hr/>
                 <p>任務描述</p>
-                <textarea id="task-desc"></textarea>
+                <textarea id="add-task-modal-task-desc"></textarea>
             </div>
-            <button id="add-btn">新增任務</button>
-            <p id="add-task-hint" class="hidden">尚有欄位還未填寫</p>
+            <button id="add-task-modal-add-btn" class="modal-block-radius-botton">新增任務</button>
+            <p id="add-task-modal-add-task-hint" class="hidden">尚有欄位還未填寫</p>
         </div>
     </div>
 

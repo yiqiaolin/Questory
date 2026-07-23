@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Questory</title>
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/room_process.css">
     <link rel="icon" href="data:,">
 </head>
@@ -88,17 +89,17 @@
 
 <!--     owner-modal     -->
 
-    <div id="owner-modal" class="modal hidden">
-        <div id="owner-modal-content">
-            <div class="text-area">
+    <div id="owner-modal" class="bottom-modal hidden">
+        <div id="owner-modal-content" class="bottom-modal-content">
+            <div class="modal-line-botton">
                 <button id="add-task">新增任務</button>
                 <hr/>
             </div>
-            <div class="text-area">
+            <div class="modal-line-botton">
                 <button id="check-member-task">夥伴任務提交認證</button>
                 <hr/>
             </div>
-            <div class="text-area">
+            <div class="modal-line-botton">
                 <button id="finish-quest">結束副本</button>
                 <hr/>
             </div>
@@ -109,22 +110,22 @@
 <!--     task-modal     -->
 
     <div id="task-modal" class="center-modal hidden">
-        <div id="task-modal-content">
+        <div id="task-modal-content" class="center-modal-content">
             <div id="task-modal-top-block">
                 <p id="task-modal-name">任務名稱</p>
-                <p id="task-modal-type">類型</p>
+                <p id="task-modal-type" class="task-type">類型</p>
             </div>
             <div id="task-modal-desc-block">
                 <p>任務描述</p>
                 <hr/>
-                <p>描述內容</p>
+                <p id="task-modal-desc">描述內容</p>
             </div>
             <div id="task-modal-reward-block">
                 <p>獎勵</p>
                 <hr/>
                 <p id="task-modal-exp">10 EXP</p>
             </div>
-            <button class="task-modal-btn">接任務</button>
+            <button id="task-modal-btn" class="modal-block-radius-botton">接任務</button>
         </div>
     </div>
 
@@ -132,10 +133,10 @@
 <!--     todo-modal     -->
 
     <div id="todo-modal" class="center-modal hidden">
-        <div id="todo-modal-content">
+        <div id="todo-modal-content" class="center-modal-content">
             <div id="todo-modal-top-block">
                 <p id="todo-modal-name">任務名稱</p>
-                <p id="todo-modal-type">類型</p>
+                <p id="todo-modal-type" class="task-type">類型</p>
             </div>
             <div id="todo-modal-desc-block">
                 <p>任務描述</p>
@@ -152,7 +153,7 @@
                 </label>
                 <input type="file" id="proof-image-input" accept="image/*" hidden>
             </div>
-            <button id="todo-modal-btn">提交</button>
+            <button id="todo-modal-btn" class="modal-block-radius-botton">提交</button>
         </div>
     </div>
 
@@ -160,15 +161,15 @@
 <!--     add-task-modal     -->
 
     <div id="add-task-modal" class="center-modal hidden">
-        <div id="add-task-modal-content">
+        <div id="add-task-modal-content" class="center-modal-content">
             <div id="add-task-modal-edit-area">
                 <input type="text" placeholder="副本名稱" id="task-name">
                 <hr/>
                 <div id="add-task-modal-type-area">
                     <p>類型</p>
                     <div id="btn-area">
-                        <button id="main-task-btn">主線</button>
-                        <button id="side-task-btn">支線</button>
+                        <button id="main-task-btn" class="task-type">主線</button>
+                        <button id="side-task-btn" class="task-type">支線</button>
                     </div>
                 </div>
                 <hr/>
@@ -180,7 +181,7 @@
                 <p>任務描述</p>
                 <textarea id="add-task-modal-task-desc"></textarea>
             </div>
-            <button id="add-task-modal-add-btn">新增任務</button>
+            <button id="add-task-modal-add-btn" class="modal-block-radius-botton">新增任務</button>
             <p id="add-task-modal-add-task-hint" class="hidden">尚有欄位還未填寫</p>
         </div>
     </div>

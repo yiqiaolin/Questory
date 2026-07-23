@@ -3,8 +3,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Questory</title>
-    <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/main.css">
     <link rel="icon" href="data:,">
 </head>
 <body>
@@ -25,22 +26,28 @@
     <div id="item-area">
     </div>
 
-    <div id="edit-modal" class="modal hidden">
-        <div id="edit-modal-content">
-            <div class="text-area">
+
+<!--     edit-modal     -->
+
+    <div id="edit-modal" class="bottom-modal hidden">
+        <div id="edit-modal-content" class="bottom-modal-content">
+            <div class="modal-line-botton">
                 <button id="create-quest">建立副本</button>
                 <hr/>
             </div>
-            <div class="text-area">
+            <div class="modal-line-botton">
                 <button id="join-quest">加入副本</button>
                 <hr/>
             </div>
         </div>
     </div>
+
+
+<!--     create-modal     -->
     
-    <div id="create-modal" class="modal hidden">
-        <div id="create-modal-content">
-            <div class="text-area">
+    <div id="create-modal" class="bottom-modal hidden">
+        <div id="create-modal-content" class="bottom-modal-content">
+            <div class="modal-line-input">
                 <input type="text" placeholder="副本名稱" id="create-quest-name">
                 <hr/>
             </div>
@@ -53,20 +60,23 @@
             </div>
             <textarea id="create-quest-description"></textarea>
             <div>
-                <button id="create-quest-btn">建立</button>
+                <button id="create-quest-btn" class="modal-block-botton">建立</button>
                 <p id="create-quest-hint" class="hidden">尚有欄位還未填寫</p>
             </div>
         </div>
     </div>
 
-    <div id="join-modal" class="modal hidden">
-        <div id="join-modal-content">
-            <div class="text-area">
+
+<!--     join-modal     -->
+
+    <div id="join-modal" class="bottom-modal hidden">
+        <div id="join-modal-content" class="bottom-modal-content">
+            <div class="modal-line-input">
                 <input type="text" placeholder="副本Code" id="code-id">
                 <hr/>
                 <p id="hint"></p>
             </div>
-            <button id="join-quest-btn">申請加入</button>
+            <button id="join-quest-btn" class="modal-block-botton">申請加入</button>
         </div>
     </div>
     <script type="module" src="../js/main.js"></script>

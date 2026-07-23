@@ -24,15 +24,17 @@ const questCode = document.getElementById("quest-code");
 const descAreaP = document.querySelector("#desc-area p");
 const bottomBtn = document.getElementById("bottom-btn");
 const editBtn = document.getElementById("edit-btn");
-const editModal = document.getElementById("edit-modal");
-const mainTaskBtn = document.getElementById("main-task-btn");
-const sideTaskBtn = document.getElementById("side-task-btn");
-const rewardValues = document.getElementById("reward-values");
-const addBtn = document.getElementById("add-btn");
-const taskName = document.getElementById("task-name");
 const taskDesc = document.getElementById("task-desc");
 const taskArea = document.getElementById("task-area");
-const addTaskHint = document.getElementById("add-task-hint");
+const addTaskModal = document.getElementById("add-task-modal");
+const addTaskModalAddTaskHint = document.getElementById("add-task-modal-add-task-hint");
+const taskName = document.getElementById("task-name");
+const addTaskModalTaskDesc = document.getElementById("add-task-modal-task-desc");
+const mainTaskBtn = document.getElementById("main-task-btn");
+const sideTaskBtn = document.getElementById("side-task-btn");
+const addTaskModalRewardValues = document.getElementById("add-task-modal-reward-values");
+const addTask = document.getElementById("add-task");
+const addTaskModalAddBtn = document.getElementById("add-task-modal-add-btn");
 
 
 // ----------函式定義----------
@@ -152,17 +154,17 @@ async function switchView(isOwner){
 
 // 顯示獎勵值  輸入:當前經驗值
 function showRewardValues(exp){
-    rewardValues.innerText = `${exp} EXP`
+    addTaskModalRewardValues.innerText = `${exp} EXP`
 };
 
-// 恢復編輯任務modal
-function resetTaskModal(){
+// 恢復add-task-modal
+function resetAddTaskModal(){
     taskName.value = "";
-    taskDesc.value = "";
+    addTaskModalTaskDesc.value = "";
     exp = 0;
     mainTaskBtn.classList.remove("selected");
     sideTaskBtn.classList.remove("selected");
-    rewardValues.innerText = "EXP"
+    addTaskModalRewardValues.innerText = "EXP"
 };
 
 
@@ -226,17 +228,17 @@ bottomBtn.addEventListener("click", async function() {
     }
 })
 
-// 點擊開啟編輯modal
+// 點擊開啟add-task-modal
 editBtn.addEventListener("click", function(){
-    editModal.classList.remove("hidden");
+    addTaskModal.classList.remove("hidden");
 })
 
-// 點擊關閉編輯modal
-editModal.addEventListener("click", function (e) {
-    if (e.target === editModal) {
-        editModal.classList.add("hidden");
-        addTaskHint.classList.add("hidden");
-        resetTaskModal();
+// 點擊關閉add-task-modal
+addTaskModal.addEventListener("click", function (e) {
+    if (e.target === addTaskModal) {
+        addTaskModal.classList.add("hidden");
+        addTaskModalAddTaskHint.classList.add("hidden");
+        resetAddTaskModal();
     }
 });
 
@@ -259,17 +261,17 @@ sideTaskBtn.addEventListener("click", function(){
 });
 
 // 點擊新增任務
-addBtn.addEventListener("click", async function(){
+addTaskModalAddBtn.addEventListener("click", async function(){
     let name = taskName.value.trim();
-    let desc = taskDesc.value.trim();
+    let desc = addTaskModalTaskDesc.value.trim();
     if(name === "" || desc === "" || exp === 0){
-        addTaskHint.classList.remove("hidden");
+        addTaskModalAddTaskHint.classList.remove("hidden");
         return 0;
     }
     const taskId = await taskApi.createTask(name, createTaskType, exp, desc);
     await roomApi.addTaskToRoom(roomId, taskId);
-    editModal.classList.add("hidden");
-    addTaskHint.classList.add("hidden");
-    resetTaskModal();
+    addTaskModal.classList.add("hidden");
+    addTaskModalAddTaskHint.classList.add("hidden");
+    resetAddTaskModal();
     loadRoom(currentIsOwner);
 });

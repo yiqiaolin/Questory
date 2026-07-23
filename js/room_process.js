@@ -47,6 +47,11 @@ const sideTaskBtn = document.getElementById("side-task-btn");
 const addTaskModalRewardValues = document.getElementById("add-task-modal-reward-values");
 const addTask = document.getElementById("add-task");
 const addTaskModalAddBtn = document.getElementById("add-task-modal-add-btn");
+const taskModalName = document.getElementById("task-modal-name");
+const taskModalType = document.getElementById("task-modal-type");
+const taskModalDesc = document.getElementById("task-modal-desc");
+const taskModalExp = document.getElementById("task-modal-exp");
+const taskModalContent = document.getElementById("task-modal-content");
 
 
 // ----------函式定義----------
@@ -69,7 +74,13 @@ async function loadTaskList(tasks){
     const tasksWithNameAndType = await Promise.all(
         availableTasks.map(async (taskId) => {
             const name = await taskApi.idGetName(taskId);
-            const type = await taskApi.idGetType(taskId);
+            let type = await taskApi.idGetType(taskId);
+            if (type === "main"){
+                type = "主線";
+            }
+            else if (type === "side"){
+                type = "支線";
+            }
             return [taskId, name, type];
         })
     );
@@ -186,25 +197,12 @@ taskContainer.addEventListener("click", async function (e) {
     if (!item) return;
     const taskId = item.dataset.id;
     const taskData = await taskApi.getTaskData(taskId);
-    taskModal.innerHTML = `
-        <div id="task-modal-content" data-id="${taskData.id}">
-            <div id="task-modal-top-block">
-                <p id="task-modal-name">${taskData.name}</p>
-                <p id="task-modal-type">${taskData.type}</p>
-            </div>
-            <div id="task-modal-desc-block">
-                <p>任務描述</p>
-                <hr/>
-                <p>${taskData.description}</p>
-            </div>
-            <div id="task-modal-reward-block">
-                <p>獎勵</p>
-                <hr/>
-                <p id="task-modal-exp">${taskData.reward} EXP</p>
-            </div>
-            <button class="task-modal-btn" data-id="${taskData.id}">接任務</button>
-        </div>
-    `
+    taskModalContent.dataset.id = taskData.id;
+    taskModalName.innerText = taskData.name;
+    taskModalType.innerText = taskData.type;
+    taskModalDesc.innerText = taskData.description;
+    taskModalExp.innerText = taskData.reward;
+    taskModalBtn.dataset.id = taskData.id;
     taskModal.classList.remove("hidden");
 });
 
