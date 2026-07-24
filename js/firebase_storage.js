@@ -13,7 +13,7 @@ export async function uploadTaskImage(file){
 
 
     const imageUrl =
-    "../assets/test-image.jpg";
+    "../assets/test-image.png";
 
 
     return imageUrl;

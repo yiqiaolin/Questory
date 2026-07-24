@@ -18,6 +18,8 @@ let currentIsOwner;
 
 
 // ----------物件取得----------
+
+// main
 const ownerMemberArea = document.getElementById("owner-member-area");
 const memberMemberArea = document.getElementById("member-member-area");
 const questCode = document.getElementById("quest-code");
@@ -26,6 +28,8 @@ const bottomBtn = document.getElementById("bottom-btn");
 const editBtn = document.getElementById("edit-btn");
 const taskDesc = document.getElementById("task-desc");
 const taskArea = document.getElementById("task-area");
+
+// add task modal
 const addTaskModal = document.getElementById("add-task-modal");
 const addTaskModalAddTaskHint = document.getElementById("add-task-modal-add-task-hint");
 const taskName = document.getElementById("task-name");
@@ -33,7 +37,6 @@ const addTaskModalTaskDesc = document.getElementById("add-task-modal-task-desc")
 const mainTaskBtn = document.getElementById("main-task-btn");
 const sideTaskBtn = document.getElementById("side-task-btn");
 const addTaskModalRewardValues = document.getElementById("add-task-modal-reward-values");
-const addTask = document.getElementById("add-task");
 const addTaskModalAddBtn = document.getElementById("add-task-modal-add-btn");
 
 

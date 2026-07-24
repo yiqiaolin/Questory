@@ -22,11 +22,28 @@ let currentUserUid;
 
 
 // ----------物件取得----------
+
+// main
 const ownerBtn = document.getElementById("owner-btn");
-const ownerModal = document.getElementById("owner-modal");
+const totalValue = document.getElementById("total-value");
+const questTitle = document.getElementById("quest-title");
 const taskContainer = document.getElementById("task-container");
+
+// owner modal
+const ownerModal = document.getElementById("owner-modal");
+const addTask = document.getElementById("add-task");
+const checkMemberTask = document.getElementById("check-member-task");
+
+// task modal
 const taskModal = document.getElementById("task-modal");
 const taskModalBtn = document.getElementById("task-modal-btn");
+const taskModalName = document.getElementById("task-modal-name");
+const taskModalType = document.getElementById("task-modal-type");
+const taskModalDesc = document.getElementById("task-modal-desc");
+const taskModalExp = document.getElementById("task-modal-exp");
+const taskModalContent = document.getElementById("task-modal-content");
+
+// todo modal
 const todoContainer = document.getElementById("todo-container");
 const proofImageInput = document.getElementById("proof-image-input");
 const previewImage = document.getElementById("preview-image");
@@ -36,8 +53,8 @@ const todoModal = document.getElementById("todo-modal");
 const todoModalName = document.getElementById("todo-modal-name");
 const todoModalType = document.getElementById("todo-modal-type");
 const todoModalDesc = document.getElementById("todo-modal-desc");
-const totalValue = document.getElementById("total-value");
-const questTitle = document.getElementById("quest-title");
+
+// add task modal
 const addTaskModal = document.getElementById("add-task-modal");
 const addTaskModalAddTaskHint = document.getElementById("add-task-modal-add-task-hint");
 const taskName = document.getElementById("task-name");
@@ -45,13 +62,11 @@ const addTaskModalTaskDesc = document.getElementById("add-task-modal-task-desc")
 const mainTaskBtn = document.getElementById("main-task-btn");
 const sideTaskBtn = document.getElementById("side-task-btn");
 const addTaskModalRewardValues = document.getElementById("add-task-modal-reward-values");
-const addTask = document.getElementById("add-task");
 const addTaskModalAddBtn = document.getElementById("add-task-modal-add-btn");
-const taskModalName = document.getElementById("task-modal-name");
-const taskModalType = document.getElementById("task-modal-type");
-const taskModalDesc = document.getElementById("task-modal-desc");
-const taskModalExp = document.getElementById("task-modal-exp");
-const taskModalContent = document.getElementById("task-modal-content");
+
+// verify task modal
+const verifyTaskModal = document.getElementById("verify-task-modal");
+const verifyTaskItemsArea = document.getElementById("verify-task-items-area");
 
 
 // ----------函式定義----------
@@ -161,6 +176,22 @@ function resetAddTaskModal(){
     addTaskModalRewardValues.innerText = "EXP"
 };
 
+// 載入verify-task-modal列表
+async function loadVerifyTaskModalList(){
+    const TaskData = await taskProgressApi.getSubmittedProgress(roomId);    
+    verifyTaskItemsArea.innerHTML = TaskData.map(task => `
+        <div class="verify-task-item" data-id="${task.id}">
+            <div>
+                <p>${task.userName}</p>
+                <p>${task.taskName}</p>
+            </div>
+            <hr/>
+        </div>
+    `)
+    .join("");  
+}
+
+
 // ----------執行程式----------
 
 // 確認登入
@@ -216,7 +247,7 @@ taskModal.addEventListener("click", function (e) {
 // 點擊接任務
 taskModal.addEventListener("click", async function(e){
 
-    if(e.target.classList.contains("task-modal-btn")){
+    if(e.target.id === "task-modal-btn"){
         const taskId = e.target.dataset.id;
         await taskProgressApi.createTaskProgress(roomId, taskId, currentUserUid);
         loadRoom(currentIsOwner);
@@ -233,6 +264,7 @@ todoContainer.addEventListener("click", async function (e) {
     todoModalName.innerText = taskData.name;
     todoModalType.innerText = taskData.type;
     todoModalDesc.innerText = taskData.description;
+    todoModalBtn.dataset.id = taskId
     todoModal.classList.remove("hidden");
 });
 
@@ -260,13 +292,15 @@ todoModalBtn.addEventListener("click", async function(){
         alert("請選擇照片");
         return;
     }
-
+    const taskId = this.dataset.id;
     const imageUrl = await storageApi.uploadTaskImage(file);
     todoModal.classList.add("hidden");
     proofImageInput.value = "";      
     previewImage.style.display="";        
     uploadText.style.display = "";
-
+    await taskProgressApi.addProofImage(roomId, taskId, currentUserUid, imageUrl);
+    await taskProgressApi.statusToSubmitted(roomId, taskId, currentUserUid);
+    loadTodoList();
 });
 
 // 點擊開啟add-task-modal
@@ -316,4 +350,18 @@ addTaskModalAddBtn.addEventListener("click", async function(){
     addTaskModalAddTaskHint.classList.add("hidden");
     resetAddTaskModal();
     loadRoom(currentIsOwner);
+});
+
+// 點擊開啟verify-task-modal
+checkMemberTask.addEventListener("click", function(){
+    loadVerifyTaskModalList()
+    verifyTaskModal.classList.remove("hidden");
+    ownerModal.classList.add("hidden");
+})
+
+// 點擊關閉verify-task-modal
+verifyTaskModal.addEventListener("click", function (e) {
+    if (e.target === verifyTaskModal) {
+        verifyTaskModal.classList.add("hidden");
+    }
 });

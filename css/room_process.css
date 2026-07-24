@@ -422,3 +422,50 @@ body{
     margin-top: 20px;
     margin-bottom: 20px;
 }
+
+
+
+/*  verify task modal */
+
+#verify-task-modal-content{
+    height: 45dvh;
+    justify-content: flex-start;
+}
+
+#verify-task-modal-top-block{
+    width: 85%;
+    margin-top: 30px;
+}
+
+#verify-task-modal-top-block p{
+    font-size: 14px;
+    margin-left: 15px;
+    margin-bottom: 5px;
+}
+
+#verify-task-modal-top-block hr{
+    width: 100%;
+    border: none;
+    border-top: 2px solid #000000;
+    margin: 0 auto;
+}
+
+#verify-task-items-area{
+    width: 75%;
+    flex: 1;
+    margin-bottom: 30px;
+    overflow-y: auto;
+}
+
+.verify-task-item div{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.verify-task-item p{
+    font-size: 14px;
+    color: #626161;
+}
