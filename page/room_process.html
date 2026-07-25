@@ -90,17 +90,17 @@
 <!--     owner-modal     -->
 
     <div id="owner-modal" class="bottom-modal hidden">
-        <div id="owner-modal-content" class="bottom-modal-content">
+        <div class="bottom-modal-content">
             <div class="modal-line-botton">
-                <button id="add-task">新增任務</button>
+                <button class="add-task-btn">新增任務</button>
                 <hr/>
             </div>
             <div class="modal-line-botton">
-                <button id="check-member-task">夥伴任務提交認證</button>
+                <button class="verify-task-btn">夥伴任務提交認證</button>
                 <hr/>
             </div>
             <div class="modal-line-botton">
-                <button id="finish-quest">結束副本</button>
+                <button class="finish-btn">結束副本</button>
                 <hr/>
             </div>
         </div>
@@ -110,22 +110,22 @@
 <!--     task-modal     -->
 
     <div id="task-modal" class="center-modal hidden">
-        <div id="task-modal-content" class="center-modal-content">
-            <div id="task-modal-top-block">
-                <p id="task-modal-name">任務名稱</p>
-                <p id="task-modal-type" class="task-type">類型</p>
+        <div class="center-modal-content">
+            <div class="top-block">
+                <p class="task-name">任務名稱</p>
+                <p class="task-type">類型</p>
             </div>
-            <div id="task-modal-desc-block">
+            <div class="desc-block">
                 <p>任務描述</p>
                 <hr/>
-                <p id="task-modal-desc">描述內容</p>
+                <p class="task-desc">描述內容</p>
             </div>
-            <div id="task-modal-reward-block">
+            <div class="reward-block">
                 <p>獎勵</p>
                 <hr/>
-                <p id="task-modal-exp">10 EXP</p>
+                <p class="task-exp">10 EXP</p>
             </div>
-            <button id="task-modal-btn" class="modal-block-radius-botton">接任務</button>
+            <button class="modal-block-radius-botton accept-btn">接任務</button>
         </div>
     </div>
 
@@ -133,27 +133,27 @@
 <!--     todo-modal     -->
 
     <div id="todo-modal" class="center-modal hidden">
-        <div id="todo-modal-content" class="center-modal-content">
-            <div id="todo-modal-top-block">
-                <p id="todo-modal-name">任務名稱</p>
-                <p id="todo-modal-type" class="task-type">類型</p>
+        <div class="center-modal-content">
+            <div class="top-block">
+                <p class="task-name">任務名稱</p>
+                <p class="task-type">類型</p>
             </div>
-            <div id="todo-modal-desc-block">
+            <div class="desc-block">
                 <p>任務描述</p>
                 <hr/>
-                <p id="todo-modal-desc">描述內容</p>
+                <p class="task-desc">描述內容</p>
             </div>
-            <div id="todo-modal-update-block">
+            <div class="update-block">
                 <p>上傳圖片</p>
-                <label id="image-box" for="proof-image-input">
-                    <img id="preview-image">
-                    <span id="upload-text">
+                <label class="image-box" for="proof-image-input">
+                    <img class="preview-image">
+                    <span class="upload-text">
                         +
                     </span>
                 </label>
                 <input type="file" id="proof-image-input" accept="image/*" hidden>
             </div>
-            <button id="todo-modal-btn" class="modal-block-radius-botton">提交</button>
+            <button class="modal-block-radius-botton submit-btn">提交</button>
         </div>
     </div>
 
@@ -161,41 +161,69 @@
 <!--     add-task-modal     -->
 
     <div id="add-task-modal" class="center-modal hidden">
-        <div id="add-task-modal-content" class="center-modal-content">
-            <div id="add-task-modal-edit-area">
-                <input type="text" placeholder="副本名稱" id="task-name">
+        <div class="center-modal-content">
+            <div class="edit-area">
+                <input type="text" placeholder="副本名稱" class="task-name">
                 <hr/>
-                <div id="add-task-modal-type-area">
+                <div class="type-area">
                     <p>類型</p>
-                    <div id="btn-area">
-                        <button id="main-task-btn" class="task-type">主線</button>
-                        <button id="side-task-btn" class="task-type">支線</button>
+                    <div class="btn-area">
+                        <button class="task-type main-task-btn">主線</button>
+                        <button class="task-type side-task-btn">支線</button>
                     </div>
                 </div>
                 <hr/>
-                <div id="add-task-modal-reward-area">
+                <div class="reward-area">
                     <p>獎勵</p>
-                    <p id="add-task-modal-reward-values">EXP</p>
+                    <p class="reward-values">EXP</p>
                 </div>
                 <hr/>
                 <p>任務描述</p>
-                <textarea id="add-task-modal-task-desc"></textarea>
+                <textarea class="task-desc"></textarea>
             </div>
-            <button id="add-task-modal-add-btn" class="modal-block-radius-botton">新增任務</button>
-            <p id="add-task-modal-add-task-hint" class="hidden">尚有欄位還未填寫</p>
+            <button class="modal-block-radius-botton add-btn">新增任務</button>
+            <p class="hidden hint">尚有欄位還未填寫</p>
         </div>
     </div>
+
 
 
 <!--     verify-task-modal     -->
 
     <div id="verify-task-modal" class="center-modal hidden">
-        <div id="verify-task-modal-content" class="center-modal-content">
-            <div id="verify-task-modal-top-block">
+        <div class="center-modal-content">
+            <div class="top-block">
                 <p>待認證任務</p>
                 <hr/>
             </div>
-            <div id="verify-task-items-area" class="hide-scrollbar">
+            <div class="items-area hide-scrollbar">
+            </div>
+        </div>
+    </div>
+
+
+<!--     verify-task-item-modal     -->
+
+    <div id="verify-task-item-modal" class="center-modal hidden">
+        <div id="verify-task-item-modal-content" class="center-modal-content">
+            <div id="verify-task-item-modal-top-block">
+                <p id="verify-task-item-modal-user-name">成員名稱</p>
+                <p id="verify-task-item-modal-type" class="task-type">類型</p>
+            </div>
+            <div id="verify-task-item-modal-desc-block">
+                <p id="verify-task-item-modal-task-name">任務名稱</p>
+                <hr/>
+                <p id="verify-task-item-modal-desc">描述內容</p>
+            </div>
+            <div id="verify-task-item-modal-image-block">
+                <p>認證圖片</p>
+                <div id="verify-task-item-modal-image-box">
+                    <img id="proof-image">
+                </div>
+            </div>
+            <div id="verify-task-item-modal-btn-block">
+                <button id="verify-task-item-modal-verify-btn" class="modal-block-radius-botton">認證</button>
+                <button id="verify-task-item-modal-refuse-btn" class="modal-block-radius-botton">拒絕</button>
             </div>
         </div>
     </div>

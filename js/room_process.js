@@ -28,46 +28,100 @@ const ownerBtn = document.getElementById("owner-btn");
 const totalValue = document.getElementById("total-value");
 const questTitle = document.getElementById("quest-title");
 const taskContainer = document.getElementById("task-container");
-
-// owner modal
-const ownerModal = document.getElementById("owner-modal");
-const addTask = document.getElementById("add-task");
-const checkMemberTask = document.getElementById("check-member-task");
-
-// task modal
-const taskModal = document.getElementById("task-modal");
-const taskModalBtn = document.getElementById("task-modal-btn");
-const taskModalName = document.getElementById("task-modal-name");
-const taskModalType = document.getElementById("task-modal-type");
-const taskModalDesc = document.getElementById("task-modal-desc");
-const taskModalExp = document.getElementById("task-modal-exp");
-const taskModalContent = document.getElementById("task-modal-content");
-
-// todo modal
 const todoContainer = document.getElementById("todo-container");
-const proofImageInput = document.getElementById("proof-image-input");
-const previewImage = document.getElementById("preview-image");
-const uploadText = document.getElementById("upload-text");
-const todoModalBtn = document.getElementById("todo-modal-btn");
-const todoModal = document.getElementById("todo-modal");
-const todoModalName = document.getElementById("todo-modal-name");
-const todoModalType = document.getElementById("todo-modal-type");
-const todoModalDesc = document.getElementById("todo-modal-desc");
 
-// add task modal
-const addTaskModal = document.getElementById("add-task-modal");
-const addTaskModalAddTaskHint = document.getElementById("add-task-modal-add-task-hint");
-const taskName = document.getElementById("task-name");
-const addTaskModalTaskDesc = document.getElementById("add-task-modal-task-desc");
-const mainTaskBtn = document.getElementById("main-task-btn");
-const sideTaskBtn = document.getElementById("side-task-btn");
-const addTaskModalRewardValues = document.getElementById("add-task-modal-reward-values");
-const addTaskModalAddBtn = document.getElementById("add-task-modal-add-btn");
+const ownerModal = (() => {
+    const root = document.getElementById("owner-modal");
+    return {
+        root,
+        addTaskBtn: root.querySelector(".add-task-btn"),
+        verifyTaskBtn: root.querySelector(".verify-task-btn"),
 
-// verify task modal
-const verifyTaskModal = document.getElementById("verify-task-modal");
-const verifyTaskItemsArea = document.getElementById("verify-task-items-area");
+        open(){ 
+            root.classList.remove("hidden"); 
+        },
+        close(){ 
+            root.classList.add("hidden"); 
+        },
+    };
+})();
 
+const taskModal = (() => {
+    const root = document.getElementById("task-modal");
+    return {
+        root,
+        content: root.querySelector(".center-modal-content"),
+        acceptBtn: root.querySelector(".accept-btn"),
+        taskName: root.querySelector(".task-name"),
+        taskType: root.querySelector(".task-type"),
+        taskDesc: root.querySelector(".task-desc"),
+        taskExp: root.querySelector(".task-exp"),
+
+        open(){ 
+            root.classList.remove("hidden"); 
+        },
+        close(){ 
+            root.classList.add("hidden"); 
+        },
+    };
+})();
+
+const todoModal = (() => {
+    const root = document.getElementById("todo-modal");
+    return {
+        root,
+        taskName: root.querySelector(".task-name"),
+        taskType: root.querySelector(".task-type"),
+        taskDesc: root.querySelector(".task-desc"),
+        submitBtn: root.querySelector(".submit-btn"),
+        uploadText: root.querySelector(".upload-text"),
+        previewImage: root.querySelector(".preview-image"),
+        proofImageInput: document.getElementById("proof-image-input"),
+
+        open(){ 
+            root.classList.remove("hidden"); 
+        },
+        close(){ 
+            root.classList.add("hidden"); 
+        },
+    };
+})();
+
+const addTaskModal = (() => {
+    const root = document.getElementById("add-task-modal");
+    return {
+        root,
+        hint: root.querySelector(".hint"),
+        taskName: root.querySelector(".task-name"),
+        taskDesc: root.querySelector(".task-desc"),
+        mainTaskBtn: root.querySelector(".main-task-btn"),
+        sideTaskBtn: root.querySelector(".side-task-btn"),
+        rewardValues: root.querySelector(".reward-values"),
+        addBtn: root.querySelector(".add-btn"),
+
+        open(){ 
+            root.classList.remove("hidden"); 
+        },
+        close(){ 
+            root.classList.add("hidden"); 
+        },
+    };
+})();
+
+const verifyTaskModal = (() => {
+    const root = document.getElementById("verify-task-modal");
+    return {
+        root,
+        itemsArea: root.querySelector(".items-area"),
+
+        open(){ 
+            root.classList.remove("hidden"); 
+        },
+        close(){ 
+            root.classList.add("hidden"); 
+        },
+    };
+})();
 
 // ----------函式定義----------
 
@@ -163,24 +217,24 @@ async function switchView(isOwner){
 
 // 顯示獎勵值  輸入:當前經驗值
 function showRewardValues(exp){
-    addTaskModalRewardValues.innerText = `${exp} EXP`
+    addTaskModal.rewardValues.innerText = `${exp} EXP`
 };
 
 // 恢復add-task-modal
 function resetAddTaskModal(){
-    taskName.value = "";
-    addTaskModalTaskDesc.value = "";
+    addTaskModal.taskName.value = "";
+    addTaskModal.taskDesc.value = "";
     exp = 0;
-    mainTaskBtn.classList.remove("selected");
-    sideTaskBtn.classList.remove("selected");
-    addTaskModalRewardValues.innerText = "EXP"
+    addTaskModal.mainTaskBtn.classList.remove("selected");
+    addTaskModal.sideTaskBtn.classList.remove("selected");
+    addTaskModal.rewardValues.innerText = "EXP"
 };
 
 // 載入verify-task-modal列表
 async function loadVerifyTaskModalList(){
     const TaskData = await taskProgressApi.getSubmittedProgress(roomId);    
-    verifyTaskItemsArea.innerHTML = TaskData.map(task => `
-        <div class="verify-task-item" data-id="${task.id}">
+    verifyTaskModal.itemsArea.innerHTML = TaskData.map(task => `
+        <div class="task-item" data-id="${task.id}">
             <div>
                 <p>${task.userName}</p>
                 <p>${task.taskName}</p>
@@ -210,158 +264,158 @@ onAuthStateChanged(auth,  async (user) => {
 
 // ----------事件監聽----------
 
-// 點擊開啟隊長modal
+// 點擊開啟owner-modal
 ownerBtn.addEventListener("click", function(){
-    ownerModal.classList.remove("hidden");
+    ownerModal.open();
 })
 
-// 點擊關閉隊長modal
-ownerModal.addEventListener("click", function (e) {
-    if (e.target === ownerModal) {
-        ownerModal.classList.add("hidden");
+// 點擊關閉owner-modal
+ownerModal.root.addEventListener("click", function (e) {
+    if (e.target === ownerModal.root) {
+        ownerModal.close();
     }
 });
 
-// 點擊開啟task_modal並載入對應資料
+// 點擊開啟task-modal並載入對應資料
 taskContainer.addEventListener("click", async function (e) {
     const item = e.target.closest(".task-item");
     if (!item) return;
     const taskId = item.dataset.id;
     const taskData = await taskApi.getTaskData(taskId);
-    taskModalContent.dataset.id = taskData.id;
-    taskModalName.innerText = taskData.name;
-    taskModalType.innerText = taskData.type;
-    taskModalDesc.innerText = taskData.description;
-    taskModalExp.innerText = taskData.reward;
-    taskModalBtn.dataset.id = taskData.id;
-    taskModal.classList.remove("hidden");
+    taskModal.content.dataset.id = taskData.id;
+    taskModal.taskName.innerText = taskData.name;
+    taskModal.taskType.innerText = taskData.type;
+    taskModal.taskDesc.innerText = taskData.description;
+    taskModal.taskExp.innerText = taskData.reward;
+    taskModal.acceptBtn.dataset.id = taskData.id;
+    taskModal.open();
 });
 
-// 點擊關閉task_modal
-taskModal.addEventListener("click", function (e) {
-    if (e.target === taskModal) {
-        taskModal.classList.add("hidden");
+// 點擊關閉task-modal
+taskModal.root.addEventListener("click", function (e) {
+    if (e.target === taskModal.root) {
+        taskModal.close();
     }
 });
 
 // 點擊接任務
-taskModal.addEventListener("click", async function(e){
+taskModal.root.addEventListener("click", async function(e){
 
-    if(e.target.id === "task-modal-btn"){
+    if(e.target.classList.contains("accept-btn")){
         const taskId = e.target.dataset.id;
         await taskProgressApi.createTaskProgress(roomId, taskId, currentUserUid);
         loadRoom(currentIsOwner);
-        taskModal.classList.add("hidden");
+        taskModal.close();
     }
 });
 
-// 點擊開啟todo_modal並載入對應資料
+// 點擊開啟todo-modal並載入對應資料
 todoContainer.addEventListener("click", async function (e) {
     const item = e.target.closest(".todo-item");
     if (!item) return;
     const taskId = item.dataset.id;
     const taskData = await taskApi.getTaskData(taskId);
-    todoModalName.innerText = taskData.name;
-    todoModalType.innerText = taskData.type;
-    todoModalDesc.innerText = taskData.description;
-    todoModalBtn.dataset.id = taskId
-    todoModal.classList.remove("hidden");
+    todoModal.taskName.innerText = taskData.name;
+    todoModal.taskType.innerText = taskData.type;
+    todoModal.taskDesc.innerText = taskData.description;
+    todoModal.submitBtn.dataset.id = taskId
+    todoModal.open();
 });
 
-// 點擊關閉todo_modal
-todoModal.addEventListener("click", function (e) {
-    if (e.target === todoModal) {
-        todoModal.classList.add("hidden");
+// 點擊關閉todo-modal
+todoModal.root.addEventListener("click", function (e) {
+    if (e.target === todoModal.root) {
+        todoModal.close();
     }
 });
 
 // 點擊上傳照片並顯示
-proofImageInput.addEventListener("change", function(){
+todoModal.proofImageInput.addEventListener("change", function(){
     const file = this.files[0];
     const url = URL.createObjectURL(file);
     
-    previewImage.src = url;
-    previewImage.style.display="block";
-    uploadText.style.display="none";
+    todoModal.previewImage.src = url;
+    todoModal.previewImage.style.display="block";
+    todoModal.uploadText.style.display="none";
 });
 
 // 點擊提交圖片
-todoModalBtn.addEventListener("click", async function(){
-    const file = proofImageInput.files[0];
+todoModal.submitBtn.addEventListener("click", async function(){
+    const file = todoModal.proofImageInput.files[0];
     if(!file){
         alert("請選擇照片");
         return;
     }
     const taskId = this.dataset.id;
     const imageUrl = await storageApi.uploadTaskImage(file);
-    todoModal.classList.add("hidden");
-    proofImageInput.value = "";      
-    previewImage.style.display="";        
-    uploadText.style.display = "";
+    todoModal.close();
+    todoModal.proofImageInput.value = "";      
+    todoModal.previewImage.style.display="";        
+    todoModal.uploadText.style.display = "";
     await taskProgressApi.addProofImage(roomId, taskId, currentUserUid, imageUrl);
     await taskProgressApi.statusToSubmitted(roomId, taskId, currentUserUid);
     loadTodoList();
 });
 
 // 點擊開啟add-task-modal
-addTask.addEventListener("click", function(){
-    addTaskModal.classList.remove("hidden");
-    ownerModal.classList.add("hidden");
+ownerModal.addTaskBtn.addEventListener("click", function(){
+    addTaskModal.open();
+    ownerModal.close();
 })
 
 // 點擊關閉add-task-modal
-addTaskModal.addEventListener("click", function (e) {
-    if (e.target === addTaskModal) {
-        addTaskModal.classList.add("hidden");
-        addTaskModalAddTaskHint.classList.add("hidden");
+addTaskModal.root.addEventListener("click", function (e) {
+    if (e.target === addTaskModal.root) {
+        addTaskModal.close();
+        addTaskModal.hint.classList.add("hidden");
         resetAddTaskModal();
     }
 });
 
 // 點擊選擇任務類型為主線並更新獎勵數值
-mainTaskBtn.addEventListener("click", function(){
-    mainTaskBtn.classList.add("selected");
-    sideTaskBtn.classList.remove("selected");
+addTaskModal.mainTaskBtn.addEventListener("click", function(){
+    addTaskModal.mainTaskBtn.classList.add("selected");
+    addTaskModal.sideTaskBtn.classList.remove("selected");
     createTaskType = "main";
     exp = baseExp * 1.5;
     showRewardValues(exp);
 });
 
 // 點擊選擇任務類型為支線並更新獎勵數值
-sideTaskBtn.addEventListener("click", function(){
-    sideTaskBtn.classList.add("selected");
-    mainTaskBtn.classList.remove("selected");
+addTaskModal.sideTaskBtn.addEventListener("click", function(){
+    addTaskModal.sideTaskBtn.classList.add("selected");
+    addTaskModal.mainTaskBtn.classList.remove("selected");
     createTaskType = "side";
     exp = baseExp * 1.2;
     showRewardValues(exp);
 });
 
 // 點擊新增任務
-addTaskModalAddBtn.addEventListener("click", async function(){
-    let name = taskName.value.trim();
-    let desc = addTaskModalTaskDesc.value.trim();
+addTaskModal.addBtn.addEventListener("click", async function(){
+    let name = addTaskModal.taskName.value.trim();
+    let desc = addTaskModal.taskDesc.value.trim();
     if(name === "" || desc === "" || exp === 0){
-        addTaskModalAddTaskHint.classList.remove("hidden");
+        addTaskModal.hint.classList.remove("hidden");
         return 0;
     }
     const taskId = await taskApi.createTask(name, createTaskType, exp, desc);
     await roomApi.addTaskToRoom(roomId, taskId);
-    addTaskModal.classList.add("hidden");
-    addTaskModalAddTaskHint.classList.add("hidden");
+    addTaskModal.close();
+    addTaskModal.hint.classList.add("hidden");
     resetAddTaskModal();
     loadRoom(currentIsOwner);
 });
 
 // 點擊開啟verify-task-modal
-checkMemberTask.addEventListener("click", function(){
+ownerModal.verifyTaskBtn.addEventListener("click", function(){
     loadVerifyTaskModalList()
-    verifyTaskModal.classList.remove("hidden");
-    ownerModal.classList.add("hidden");
+    verifyTaskModal.open();
+    ownerModal.close();
 })
 
 // 點擊關閉verify-task-modal
-verifyTaskModal.addEventListener("click", function (e) {
-    if (e.target === verifyTaskModal) {
-        verifyTaskModal.classList.add("hidden");
+verifyTaskModal.root.addEventListener("click", function (e) {
+    if (e.target === verifyTaskModal.root) {
+        verifyTaskModal.close();
     }
 });

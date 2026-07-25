@@ -4,22 +4,65 @@ from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 import * as roomApi from "./firebase_room.js";
 import * as userApi from "./firebase_user.js";
 
+
 // ----------物件取得----------
+
 const editBtn = document.getElementById("edit-btn");
-const editModal = document.getElementById("edit-modal");
-const createQuest = document.getElementById("create-quest");
-const createModal = document.getElementById("create-modal");
-const createQuestBtn = document.getElementById("create-quest-btn");
 const itemArea = document.getElementById("item-area");
-const joinQuest = document.getElementById("join-quest");
-const joinModal = document.getElementById("join-modal");
-const joinQuestBtn = document.getElementById("join-quest-btn");
 const userName = document.getElementById("user-name");
 const userLevel = document.getElementById("user-level");
-const nameInput = document.getElementById("create-quest-name");
-const descInput = document.getElementById("create-quest-description");
-const dateInput = document.getElementById("create-quest-date");
-const createQuestHint = document.getElementById("create-quest-hint");
+
+const editModal = (() => {
+    const root = document.getElementById("edit-modal");
+    return {
+        root,
+        createBtn: root.querySelector(".create-btn"),
+        joinBtn: root.querySelector(".join-btn"),
+
+        open(){ 
+            root.classList.remove("hidden"); 
+        },
+        close(){ 
+            root.classList.add("hidden"); 
+        },
+    };
+})();
+
+const createModal = (() => {
+    const root = document.getElementById("create-modal");
+    return {
+        root,
+        createBtn: root.querySelector(".create-btn"),
+        questName: root.querySelector(".quest-name"),
+        questDate: root.querySelector(".quest-date"),
+        questDesc: root.querySelector(".quest-desc"),
+        hint: root.querySelector(".hint"),
+
+        open(){ 
+            root.classList.remove("hidden"); 
+        },
+        close(){ 
+            root.classList.add("hidden"); 
+        },
+    };
+})();
+
+const joinModal = (() => {
+    const root = document.getElementById("join-modal");
+    return {
+        root,
+        questCode: root.querySelector(".quest-code"),
+        joinBtn: root.querySelector(".join-btn"),
+        hint: root.querySelector(".hint"),
+
+        open(){ 
+            root.classList.remove("hidden"); 
+        },
+        close(){ 
+            root.classList.add("hidden"); 
+        },
+    };
+})();
 
 
 // ----------函式定義----------
@@ -65,70 +108,69 @@ onAuthStateChanged(auth,  async (user) => {
 
 // ----------事件監聽----------
 
-// 點擊開啟編輯modal
+// 點擊開啟edit-modal
 editBtn.addEventListener("click", function(){
-    editModal.classList.remove("hidden");
+    editModal.open();
 })
 
-// 點擊關閉編輯modal
-editModal.addEventListener("click", function (e) {
-    if (e.target === editModal) {
-        editModal.classList.add("hidden");
+// 點擊關閉edit-modal
+editModal.root.addEventListener("click", function (e) {
+    if (e.target === editModal.root) {
+        editModal.close();
     }
 });
 
-// 點擊開啟新增副本modal
-createQuest.addEventListener("click", function(){
-   createModal.classList.remove("hidden");
+// 點擊開啟create-modal
+editModal.createBtn.addEventListener("click", function(){
+   createModal.open();
 })
 
-// 點擊關閉新增副本modal
-createModal.addEventListener("click", function (e) {
-    if (e.target === createModal) {
-        createModal.classList.add("hidden");
-        editModal.classList.add("hidden");
-        createQuestHint.classList.add("hidden");
+// 點擊關閉create-modal
+createModal.root.addEventListener("click", function (e) {
+    if (e.target === createModal.root) {
+        createModal.close();
+        editModal.close();
+        createModal.hint.classList.add("hidden");
     }
 });
 
 // 點擊執行新增副本動作
-createQuestBtn.addEventListener("click", async function(){
-    const name = nameInput.value.trim();
-    const desc = descInput.value.trim();
-    const date = dateInput.value;
+createModal.createBtn.addEventListener("click", async function(){
+    const name = createModal.questName.value.trim();
+    const desc = createModal.questDesc.value.trim();
+    const date = createModal.questDate.value;
 
     const userUid = auth.currentUser.uid;
     if(name === "" || desc === ""){
-        createQuestHint.classList.remove("hidden");
+        createModal.hint.classList.remove("hidden");
         return 0;
     }
     await roomApi.createRoom(name, desc, date, userUid);
-    createModal.classList.add("hidden");
-    editModal.classList.add("hidden");
-    createQuestHint.classList.add("hidden");
+    createModal.close();
+    editModal.close();
+    createModal.hint.classList.add("hidden");
     const rooms = await roomApi.getRoomList();
     showRoomList(rooms);
 
-    nameInput.value = "";
-    descInput.value = "";
-    dateInput.value = "2007-08-21";
+    createModal.questName.value = "";
+    createModal.questDesc.value = "";
+    createModal.questDate.value = "2007-08-21";
 })
 
-// 點擊開啟加入副本modal
-joinQuest.addEventListener("click", function(){
-   joinModal.classList.remove("hidden");
+// 點擊開啟join-modal
+editModal.joinBtn.addEventListener("click", function(){
+   joinModal.open();
 })
 
-// 點擊關閉加入副本modal
-joinModal.addEventListener("click", function (e) {
-    if (e.target === joinModal) {
-        let hint = document.getElementById("hint");
-        const codeId = document.getElementById("code-id");
-        let code = codeId.value;
-        joinModal.classList.add("hidden");
-        editModal.classList.add("hidden");
-        codeId.value = "";
-        hint.innerText = "";
+// 點擊關閉join-modal
+joinModal.root.addEventListener("click", function (e) {
+    if (e.target === joinModal.root) {
+        let hint = joinModal.hint;
+        const questCode = joinModal.questCode;
+        joinModal.close();
+        editModal.close();
+        questCode.value = "";
+        joinModal.hint.innerText = "";
     }
 });
 
@@ -147,10 +189,10 @@ itemArea.addEventListener("click", async function (e) {
 });
 
 // 點擊執行申請加入副本動作
-joinQuestBtn.addEventListener("click", async function() {
-    let hint = document.getElementById("hint");
-    const codeId = document.getElementById("code-id");
-    let code = codeId.value;
+joinModal.joinBtn.addEventListener("click", async function() {
+    let hint = joinModal.hint;
+    const questCode = joinModal.questCode;
+    let code = questCode.value;
     const userUid = auth.currentUser.uid;
     let result = await roomApi.joinRoom(code, userUid);
     if (!result){

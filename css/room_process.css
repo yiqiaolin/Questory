@@ -270,46 +270,46 @@ body{
 
 /* owner modal */
 
-#owner-modal-content{
+#owner-modal .bottom-modal-content{
     height: 250px;
 }
 
 
 /* task modal */
 
-#task-modal-content{
+#task-modal .center-modal-content{
     height: 45dvh;
 }
 
-#task-modal-top-block{
+#task-modal .top-block{
     width: 85%;
     display: flex;
     justify-content: space-between;
     flex: 1;
 }
 
-#task-modal-name{
+#task-modal .task-name{
     font-size: 20px;
     color: #626161;
     margin-top: 25px;
 }
 
 
-#task-modal-type{
+#task-modal .task-type{
     margin-top: 35px;
 }
 
-#task-modal-content hr{
+#task-modal hr{
     width: 100%;
     color: #626161;
 }
 
-#task-modal-desc-block{
+#task-modal .desc-block{
     width: 85%;
     flex: 3;
 }
 
-#task-modal-desc-block p{
+#task-modal .desc-block p{
     font-size: 12px;
     color: #626161;
     margin-top: 5px;
@@ -317,25 +317,25 @@ body{
     margin-right: 5px;
 }
 
-#task-modal-reward-block{
+#task-modal .reward-block{
     width: 85%;
     flex: 1;
     display: flex;
     flex-direction: column;
 }
 
-#task-modal-reward-block p{
+#task-modal .reward-block p{
     font-size: 12px;
     color: #626161;
     margin-left: 5px;
     margin-right: 5px;
 }
 
-#task-modal-exp{
+#task-modal .task-exp{
     align-self: flex-end;
 }
 
-#task-modal-content button{
+#task-modal button{
     margin-top: 20px;
     margin-bottom: 40px;
 }
@@ -344,59 +344,60 @@ body{
 
 /* todo modal */
 
-#todo-modal-content{
+#todo-modal .center-modal-content{
     height: 45dvh;
 }
 
-#todo-modal-top-block{
+#todo-modal .top-block{
     width: 85%;
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
 }
 
-#todo-modal-name{
+#todo-modal .task-name{
     font-size: 20px;
     color: #626161;
     margin-top: 25px;
 }
 
 
-#todo-modal-type{
+#todo-modal .task-type{
     margin-top: 35px;
 }
 
-#todo-modal-content hr{
+#todo-modal hr{
     width: 100%;
     color: #626161;
 }
 
-#todo-modal-desc-block{
+#todo-modal .desc-block{
     width: 85%;
     flex: 1;
 }
 
-#todo-modal-desc-block p{
+#todo-modal .desc-block p{
     font-size: 12px;
     color: #626161;
     margin-left: 5px;
     margin-right: 5px;
 }
 
-#todo-modal-update-block{
+#todo-modal .update-block{
     width: 85%;
+    height: 30%;
 }
 
-#todo-modal-update-block p{
+#todo-modal .update-block p{
     font-size: 12px;
     color: #626161;
     margin-left: 5px;
     margin-right: 5px;
 }
 
-#image-box{
+#todo-modal .image-box{
     width: 100%;
-    height:150px;
+    height: 100%;
     border: 1px solid #626161;
 
     display:flex;
@@ -406,7 +407,7 @@ body{
     cursor:pointer;
 }
 
-#preview-image{
+#todo-modal .preview-image{
     width:95%;
     height:95%;
 
@@ -414,12 +415,12 @@ body{
     display:none;
 }
 
-#upload-text{
+#todo-modal .upload-text{
     font-size: 30px;
 }
 
-#todo-modal-content button{
-    margin-top: 20px;
+#todo-modal button{
+    margin-top: 40px;
     margin-bottom: 20px;
 }
 
@@ -427,37 +428,37 @@ body{
 
 /*  verify task modal */
 
-#verify-task-modal-content{
+#verify-task-modal .center-modal-content{
     height: 45dvh;
     justify-content: flex-start;
 }
 
-#verify-task-modal-top-block{
+#verify-task-modal .top-block{
     width: 85%;
     margin-top: 30px;
 }
 
-#verify-task-modal-top-block p{
+#verify-task-modal .top-block p{
     font-size: 14px;
     margin-left: 15px;
     margin-bottom: 5px;
 }
 
-#verify-task-modal-top-block hr{
+#verify-task-modal .top-block hr{
     width: 100%;
     border: none;
     border-top: 2px solid #000000;
     margin: 0 auto;
 }
 
-#verify-task-items-area{
+#verify-task-modal .items-area{
     width: 75%;
     flex: 1;
     margin-bottom: 30px;
     overflow-y: auto;
 }
 
-.verify-task-item div{
+.task-item div{
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
@@ -465,7 +466,7 @@ body{
     padding-right: 5px;
 }
 
-.verify-task-item p{
+.task-item p{
     font-size: 14px;
     color: #626161;
 }

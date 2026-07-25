@@ -30,13 +30,13 @@
 <!--     edit-modal     -->
 
     <div id="edit-modal" class="bottom-modal hidden">
-        <div id="edit-modal-content" class="bottom-modal-content">
+        <div class="bottom-modal-content">
             <div class="modal-line-botton">
-                <button id="create-quest">建立副本</button>
+                <button class="create-btn">建立副本</button>
                 <hr/>
             </div>
             <div class="modal-line-botton">
-                <button id="join-quest">加入副本</button>
+                <button class="join-btn">加入副本</button>
                 <hr/>
             </div>
         </div>
@@ -46,22 +46,22 @@
 <!--     create-modal     -->
     
     <div id="create-modal" class="bottom-modal hidden">
-        <div id="create-modal-content" class="bottom-modal-content">
+        <div class="bottom-modal-content">
             <div class="modal-line-input">
-                <input type="text" placeholder="副本名稱" id="create-quest-name">
+                <input type="text" placeholder="副本名稱" class="quest-name">
                 <hr/>
             </div>
             <div class="text-area">
                 <p>副本開始日期</p>
-                <input type="date" value="2007-08-21" id="create-quest-date">
+                <input type="date" value="2007-08-21" class="quest-date">
             </div>
             <div class="text-area">
                 <p>描述</p>
             </div>
-            <textarea id="create-quest-description"></textarea>
+            <textarea class="quest-desc"></textarea>
             <div>
-                <button id="create-quest-btn" class="modal-block-botton">建立</button>
-                <p id="create-quest-hint" class="hidden">尚有欄位還未填寫</p>
+                <button class="modal-block-botton create-btn">建立</button>
+                <p class="hint hidden">尚有欄位還未填寫</p>
             </div>
         </div>
     </div>
@@ -70,14 +70,15 @@
 <!--     join-modal     -->
 
     <div id="join-modal" class="bottom-modal hidden">
-        <div id="join-modal-content" class="bottom-modal-content">
+        <div class="bottom-modal-content">
             <div class="modal-line-input">
-                <input type="text" placeholder="副本Code" id="code-id">
+                <input type="text" placeholder="副本Code" class="quest-code">
                 <hr/>
-                <p id="hint"></p>
+                <p class="hint"></p>
             </div>
-            <button id="join-quest-btn" class="modal-block-botton">申請加入</button>
+            <button class="modal-block-botton join-btn">申請加入</button>
         </div>
     </div>
+    
     <script type="module" src="../js/main.js"></script>
 </body>

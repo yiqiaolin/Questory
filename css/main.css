@@ -91,14 +91,14 @@
 
 /* edit modal */
 
-#edit-modal-content{
+#edit-modal .bottom-modal-content{
     height: 200px;
 }
 
 
 /* create modal */
 
-#create-modal-content{
+#create-modal .bottom-modal-content{
     height: 75dvh;
 }
 
@@ -120,11 +120,11 @@
     margin-bottom: 2px;
 }
 
-#create-quest-date{
+#create-modal .quest-date{
     color: #626161;
 }
 
-#create-modal-content textarea {
+#create-modal textarea {
     width: 75vw;
     height: 30%;
     box-sizing: border-box;
@@ -135,12 +135,12 @@
     padding: 5px;
 }
 
-#create-quest-btn{
+#create-modal .create-btn{
     margin-top: 30px;
     width: 85vw;
 }
 
-#create-quest-hint{
+#create-modal .hint{
     font-size: 12px;
     margin-top: 3px;
     margin-left: 10px;
@@ -150,17 +150,17 @@
 
 /* join modal */
 
-#join-modal-content{
+#join-modal .bottom-modal-content{
     padding-top: 30px;
     height: 40dvh;
 }
 
-#join-quest-btn{
+#join-modal .join-btn{
     margin-top: 50px;
     width: 85vw;
 }
 
-#hint{
+#join-modal .hint{
     font-size: 12px;
     margin-top: 3px;
     color: #6b9fde;
