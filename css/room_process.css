@@ -271,14 +271,14 @@ body{
 /* owner modal */
 
 #owner-modal .bottom-modal-content{
-    height: 250px;
+    height: 40dvh;
 }
 
 
 /* task modal */
 
 #task-modal .center-modal-content{
-    height: 45dvh;
+    height: 60dvh;
 }
 
 #task-modal .top-block{
@@ -345,7 +345,7 @@ body{
 /* todo modal */
 
 #todo-modal .center-modal-content{
-    height: 45dvh;
+    height: 60dvh;
 }
 
 #todo-modal .top-block{
@@ -429,7 +429,7 @@ body{
 /*  verify task modal */
 
 #verify-task-modal .center-modal-content{
-    height: 45dvh;
+    height: 60dvh;
     justify-content: flex-start;
 }
 
