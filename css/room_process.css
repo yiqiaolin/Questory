@@ -350,9 +350,9 @@ body{
 
 #todo-modal .top-block{
     width: 85%;
+    height: 15%;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
 }
 
 #todo-modal .task-name{
@@ -420,8 +420,8 @@ body{
 }
 
 #todo-modal button{
-    margin-top: 40px;
-    margin-bottom: 20px;
+    margin-top: 30px;
+    margin-bottom: 10px;
 }
 
 
