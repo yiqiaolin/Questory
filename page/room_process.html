@@ -143,17 +143,54 @@
                 <hr/>
                 <p class="task-desc">描述內容</p>
             </div>
-            <div class="update-block">
-                <p>上傳圖片</p>
-                <label class="image-box" for="proof-image-input">
-                    <img class="preview-image">
-                    <span class="upload-text">
-                        +
-                    </span>
-                </label>
-                <input type="file" id="proof-image-input" accept="image/*" hidden>
+
+            <div class="in_progress-panel">
+                <div class="update-block">
+                    <p>上傳圖片</p>
+                    <label class="image-box" for="proof-image-input">
+                        <img class="preview-image">
+                        <span class="upload-text">
+                            +
+                        </span>
+                    </label>
+                    <input type="file" id="proof-image-input" accept="image/*" hidden>
+                </div>
+                <button class="modal-block-radius-botton submit-btn">提交</button>
             </div>
-            <button class="modal-block-radius-botton submit-btn">提交</button>
+
+            <div class="submitted-panel">
+                <div class="image-block">
+                    <p>認證圖片</p>
+                    <div class="image-box">
+                        <img class="proof-image">
+                    </div>
+                </div>
+                <p class="text">等待隊長認證中......</p>
+            </div>
+
+            <div class="completed-panel">
+                <div class="image-block">
+                    <p>認證圖片</p>
+                    <div class="image-box">
+                        <img class="proof-image">
+                    </div>
+                </div>
+                <div class="reward-block">
+                    <p>獎勵</p>
+                    <hr/>
+                    <p class="reward-value">EXP</p>
+                </div>
+            </div>
+
+            <div class="failed-panel">
+                <div class="image-block">
+                    <p>認證圖片</p>
+                    <div class="image-box">
+                        <img class="proof-image">
+                    </div>
+                </div>
+                <button class="modal-block-radius-botton resubmit-btn">重新提交</button>
+            </div>
         </div>
     </div>
 
@@ -208,7 +245,6 @@
         <div class="center-modal-content">
             <div class="top-block">
                 <p class="user-name">成員名稱</p>
-                <p class="task-type" class="task-type">類型</p>
             </div>
             <div class="desc-block">
                 <p class="task-name">任務名稱</p>

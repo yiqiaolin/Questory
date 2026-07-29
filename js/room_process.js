@@ -77,6 +77,11 @@ const todoModal = (() => {
         uploadText: root.querySelector(".upload-text"),
         previewImage: root.querySelector(".preview-image"),
         proofImageInput: document.getElementById("proof-image-input"),
+        submittedPanelProofImage: root.querySelector(".submitted-panel .proof-image"),
+        completedPanelProofImage: root.querySelector(".completed-panel .proof-image"),
+        completedPanelRewardValue: root.querySelector(".completed-panel .reward-value"),
+        failedPanelProofImage: root.querySelector(".failed-panel .proof-image"),
+        failedPanelResubmitBtn: root.querySelector(".failed-panel .resubmit-btn"),
 
         open(){ 
             root.classList.remove("hidden"); 
@@ -123,6 +128,27 @@ const verifyTaskModal = (() => {
     };
 })();
 
+const verifyTaskItemModal = (() => {
+    const root = document.getElementById("verify-task-item-modal");
+    return {
+        root,
+        userName: root.querySelector(".user-name"),
+        taskName: root.querySelector(".task-name"),
+        taskDesc: root.querySelector(".task-desc"),
+        proofImage: root.querySelector(".proof-image"),
+        verifyBtn: root.querySelector(".verify-btn"),
+        refuseBtn: root.querySelector(".refuse-btn"),
+
+        open(){ 
+            root.classList.remove("hidden"); 
+        },
+        close(){ 
+            root.classList.add("hidden"); 
+        },
+    };
+})();
+
+
 // ----------函式定義----------
 
 // 取得副本資料並載入副本名
@@ -144,12 +170,7 @@ async function loadTaskList(tasks){
         availableTasks.map(async (taskId) => {
             const name = await taskApi.idGetName(taskId);
             let type = await taskApi.idGetType(taskId);
-            if (type === "main"){
-                type = "主線";
-            }
-            else if (type === "side"){
-                type = "支線";
-            }
+            type = translate(type);
             return [taskId, name, type];
         })
     );
@@ -165,24 +186,35 @@ async function loadTaskList(tasks){
     .join("");    
 }
 
+// 翻譯  輸入:要轉換的詞 輸出:狀態名稱
+function translate(word){
+    if (word === "in_progress"){
+        return "進行中";
+    }
+    else if (word === "submitted"){
+        return "已提交";
+    }
+    else if (word === "completed"){
+        return "已完成";
+    }
+    else if (word === "failed"){
+        return "任務失敗";
+    }
+    else if (word === "main"){
+        return "主線";
+    }
+    else if (word === "side"){
+        return "支線";
+    }
+}
+
 // 載入副本待辦列表
 async function loadTodoList(){
     const todoDoc = await taskProgressApi.getTaskProgress(currentUserUid, roomId);    
     let todoData = todoDoc.map((doc)=>{
-        if (doc.status === "in_progress"){
-            doc.status = "進行中";
-        }
-        else if (doc.status === "submitted"){
-            doc.status = "已提交";
-        }
-        else if (doc.status === "completed"){
-            doc.status = "已完成";
-        }
-        else if (doc.status === "failed"){
-            doc.status = "任務失敗";
-        }
+        status = translate(doc.status);
 
-        return [doc.taskName, doc.status, doc.taskId]
+        return [doc.taskName, status, doc.id]
     });
     todoContainer.innerHTML = todoData.map(todo => `
         <div class="todo-item" data-id="${todo[2]}">
@@ -244,6 +276,70 @@ async function loadVerifyTaskModalList(){
     `)
     .join("");  
 }
+
+// 切換todo-modal視角  輸入:任務狀態
+function switchTodoModalView(status){
+    const inProgressPanel = document.querySelectorAll(".in_progress-panel");
+    const submittedPanel = document.querySelectorAll(".submitted-panel");
+    const completedPanel = document.querySelectorAll(".completed-panel");
+    const failedPanel = document.querySelectorAll(".failed-panel");
+    if(status === "in_progress"){
+        inProgressPanel.forEach(element => {
+            element.classList.remove("hidden");
+        });
+        submittedPanel.forEach(element => {
+            element.classList.add("hidden");
+        });
+        completedPanel.forEach(element => {
+            element.classList.add("hidden");
+        });
+        failedPanel.forEach(element => {
+            element.classList.add("hidden");
+        });
+    }
+    else if(status === "submitted"){
+        inProgressPanel.forEach(element => {
+            element.classList.add("hidden");
+        }); 
+        submittedPanel.forEach(element => {
+            element.classList.remove("hidden");
+        });
+        completedPanel.forEach(element => {
+            element.classList.add("hidden");
+        });
+        failedPanel.forEach(element => {
+            element.classList.add("hidden");
+        });
+    }
+    else if(status === "completed"){
+        inProgressPanel.forEach(element => {
+            element.classList.add("hidden");
+        }); 
+        submittedPanel.forEach(element => {
+            element.classList.add("hidden");
+        });
+        completedPanel.forEach(element => {
+            element.classList.remove("hidden");
+        });
+        failedPanel.forEach(element => {
+            element.classList.add("hidden");
+        });
+    }
+    else if(status === "failed"){
+        inProgressPanel.forEach(element => {
+            element.classList.add("hidden");
+        }); 
+        submittedPanel.forEach(element => {
+            element.classList.add("hidden");
+        });
+        completedPanel.forEach(element => {
+            element.classList.add("hidden");
+        });
+        failedPanel.forEach(element => {
+            element.classList.remove("hidden");
+        });
+    }
+};
 
 
 // ----------執行程式----------
@@ -313,12 +409,21 @@ taskModal.root.addEventListener("click", async function(e){
 todoContainer.addEventListener("click", async function (e) {
     const item = e.target.closest(".todo-item");
     if (!item) return;
-    const taskId = item.dataset.id;
+    const progressId = item.dataset.id;
+    const progressData = await taskProgressApi.getTaskProgressData(progressId);
+    const taskId = progressData.taskId;
     const taskData = await taskApi.getTaskData(taskId);
+    switchTodoModalView(progressData.status);
+    const type = translate(taskData.type);
     todoModal.taskName.innerText = taskData.name;
-    todoModal.taskType.innerText = taskData.type;
+    todoModal.taskType.innerText = type;
     todoModal.taskDesc.innerText = taskData.description;
     todoModal.submitBtn.dataset.id = taskId
+    todoModal.submittedPanelProofImage.src = progressData.proofImages[0];
+    todoModal.completedPanelProofImage.src = progressData.proofImages[0];
+    todoModal.completedPanelRewardValue.innerText = `${taskData.reward}  EXP`
+    todoModal.failedPanelProofImage.src = progressData.proofImages[0];
+    todoModal.failedPanelResubmitBtn.dataset.id = progressData.id;
     todoModal.open();
 });
 
@@ -353,7 +458,8 @@ todoModal.submitBtn.addEventListener("click", async function(){
     todoModal.previewImage.style.display="";        
     todoModal.uploadText.style.display = "";
     await taskProgressApi.addProofImage(roomId, taskId, currentUserUid, imageUrl);
-    await taskProgressApi.statusToSubmitted(roomId, taskId, currentUserUid);
+    const progressId = `${roomId}_${taskId}_${currentUserUid}`;
+    await taskProgressApi.changeStatus(progressId, "submitted");
     loadTodoList();
 });
 
@@ -419,3 +525,54 @@ verifyTaskModal.root.addEventListener("click", function (e) {
         verifyTaskModal.close();
     }
 });
+
+// 點擊開啟verify-task-item-modal並載入對應資料
+verifyTaskModal.itemsArea.addEventListener("click", async function (e) {
+    const item = e.target.closest(".task-item");
+    if (!item) return;
+    const progressId = item.dataset.id;
+    const progressData = await taskProgressApi.getTaskProgressData(progressId);
+    const taskData = await taskApi.getTaskData(progressData.taskId)
+
+    verifyTaskItemModal.userName.innerText = progressData.userName;
+    verifyTaskItemModal.taskName.innerText = progressData.taskName;
+    verifyTaskItemModal.taskDesc.innerText = taskData.description;
+    verifyTaskItemModal.proofImage.src = progressData.proofImages[0];
+    verifyTaskItemModal.verifyBtn.dataset.id = progressData.id;
+    verifyTaskItemModal.refuseBtn.dataset.id = progressData.id;
+    verifyTaskItemModal.open();
+    verifyTaskModal.close();
+});
+
+// 點擊關閉verify-task-modal
+verifyTaskItemModal.root.addEventListener("click", function (e) {
+    if (e.target === verifyTaskItemModal.root) {
+        verifyTaskItemModal.close();
+    }
+});
+
+// 點擊認證任務
+verifyTaskItemModal.verifyBtn.addEventListener("click", async function () {
+    const progressId = this.dataset.id;
+    await taskProgressApi.changeStatus(progressId, "completed");
+    loadTodoList();
+    verifyTaskItemModal.close();
+});
+
+// 點擊拒絕任務
+verifyTaskItemModal.refuseBtn.addEventListener("click", async function () {
+    const progressId = this.dataset.id;
+    await taskProgressApi.changeStatus(progressId, "failed");
+    loadTodoList();
+    verifyTaskItemModal.close();
+});
+
+// 點擊重新提交
+todoModal.failedPanelResubmitBtn.addEventListener("click", async function () {
+    const progressId = this.dataset.id;
+    await taskProgressApi.changeStatus(progressId, "in_progress");
+    await taskProgressApi.clearProofImages(progressId);
+    loadTodoList();
+    todoModal.close();
+});
+

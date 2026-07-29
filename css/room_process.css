@@ -350,7 +350,7 @@ body{
 
 #todo-modal .top-block{
     width: 85%;
-    height: 15%;
+    margin-bottom: 20px;
     display: flex;
     justify-content: space-between;
 }
@@ -358,46 +358,40 @@ body{
 #todo-modal .task-name{
     font-size: 20px;
     color: #626161;
-    margin-top: 25px;
-}
-
-
-#todo-modal .task-type{
-    margin-top: 35px;
-}
-
-#todo-modal hr{
-    width: 100%;
-    color: #626161;
 }
 
 #todo-modal .desc-block{
     width: 85%;
-    flex: 1;
-}
-
-#todo-modal .desc-block p{
-    font-size: 12px;
-    color: #626161;
-    margin-left: 5px;
-    margin-right: 5px;
-}
-
-#todo-modal .update-block{
-    width: 85%;
     height: 30%;
 }
 
-#todo-modal .update-block p{
-    font-size: 12px;
+#todo-modal .desc-block p{
+    font-size: 14px;
     color: #626161;
-    margin-left: 5px;
-    margin-right: 5px;
+    padding: 5px;
 }
 
-#todo-modal .image-box{
+#todo-modal .in_progress-panel{
+    width: 85%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#todo-modal .in_progress-panel .update-block{
+    height: 80%;
     width: 100%;
-    height: 100%;
+}
+
+#todo-modal .in_progress-panel .update-block p{
+    font-size: 14px;
+    color: #626161;
+    padding: 5px;
+}
+
+#todo-modal .in_progress-panel .image-box{
+    height: 80%;
     border: 1px solid #626161;
 
     display:flex;
@@ -407,7 +401,7 @@ body{
     cursor:pointer;
 }
 
-#todo-modal .preview-image{
+#todo-modal .in_progress-panel .preview-image{
     width:95%;
     height:95%;
 
@@ -415,15 +409,157 @@ body{
     display:none;
 }
 
-#todo-modal .upload-text{
+#todo-modal .in_progress-panel .upload-text{
     font-size: 30px;
 }
 
-#todo-modal button{
-    margin-top: 30px;
-    margin-bottom: 10px;
+#todo-modal .in_progress-panel button{
+    margin-top: 20px;
+    width: 87.5%;
 }
 
+#todo-modal .submitted-panel{
+    width: 85%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#todo-modal .submitted-panel .image-block{
+    height: 80%;
+    width: 100%;
+}
+
+#todo-modal .submitted-panel .image-block p{
+    font-size: 14px;
+    color: #626161;
+    padding: 5px;
+}
+
+#todo-modal .submitted-panel .image-box{
+    border: #626161 solid 1px;
+    height: 80%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    cursor:pointer;
+}
+
+#todo-modal .submitted-panel .proof-image{
+    display: block;
+
+    width:95%;
+    height:95%;
+
+    object-fit:contain;
+}
+
+#todo-modal .submitted-panel .text{
+    margin-top: 20px;
+    font-size: 20px;
+    color: #626161;
+}
+
+#todo-modal .completed-panel{
+    width: 85%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#todo-modal .completed-panel .image-block{
+    height: 80%;
+    width: 100%;
+}
+
+#todo-modal .completed-panel .image-block p{
+    font-size: 14px;
+    color: #626161;
+    padding: 5px;
+}
+
+#todo-modal .completed-panel .image-box{
+    border: #626161 solid 1px;
+    height: 80%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    cursor:pointer;
+}
+
+#todo-modal .completed-panel .proof-image{
+    display: block;
+
+    width:95%;
+    height:95%;
+
+    object-fit:contain;
+}
+
+#todo-modal .completed-panel .reward-block{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#todo-modal .completed-panel .reward-block p{
+    font-size: 14px;
+    color: #626161;
+    padding: 5px;
+}
+
+#todo-modal .completed-panel .reward-block .reward-value{
+    align-self: flex-end;
+}
+#todo-modal .failed-panel{
+    width: 85%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#todo-modal .failed-panel .image-block{
+    height: 80%;
+    width: 100%;
+}
+
+#todo-modal .failed-panel .image-block p{
+    font-size: 14px;
+    color: #626161;
+    padding: 5px;
+}
+
+#todo-modal .failed-panel .image-box{
+    border: #626161 solid 1px;
+    height: 80%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    cursor:pointer;
+}
+
+#todo-modal .failed-panel .proof-image{
+    display: block;
+
+    width:95%;
+    height:95%;
+
+    object-fit:contain;
+}
+
+#todo-modal .failed-panel button{
+    margin-top: 20px;
+    width: 87.5%;
+}
 
 
 /*  verify task modal */
@@ -469,4 +605,76 @@ body{
 .task-item p{
     font-size: 14px;
     color: #626161;
+}
+
+
+/* verify task item modal */
+
+#verify-task-item-modal .center-modal-content{
+    height: 60dvh;
+}
+
+#verify-task-item-modal .top-block{
+    width: 85%;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#verify-task-item-modal .user-name {
+    font-size: 20px;
+    color: #626161;
+}
+
+#verify-task-item-modal .desc-block{
+    width: 85%;
+    height: 30%;
+}
+
+#verify-task-item-modal .desc-block p{
+    font-size: 14px;
+    color: #626161;
+    padding: 5px;
+}
+
+#verify-task-item-modal .image-block{
+    width: 85%;
+    height: 40%;
+}
+
+#verify-task-item-modal .image-block p{
+    font-size: 14px;
+    color: #626161;
+    padding: 5px;
+}
+
+#verify-task-item-modal .image-box{
+    border: #626161 solid 1px;
+    height: 80%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    cursor:pointer;
+}
+
+#verify-task-item-modal .proof-image{
+    display: block;
+
+    width:95%;
+    height:95%;
+
+    object-fit:contain;
+}
+
+#verify-task-item-modal .btn-block{
+    width: 85%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+#verify-task-item-modal .btn-block button{
+    width: 45%;
 }
