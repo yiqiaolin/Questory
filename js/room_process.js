@@ -20,6 +20,12 @@ let exp = 0;
 let currentIsOwner;
 let currentUserUid;
 
+const rankImages = [
+    "../assets/first-rank.png",
+    "../assets/second-rank.png",
+    "../assets/third-rank.png"
+];
+
 
 // ----------物件取得----------
 
@@ -159,7 +165,7 @@ async function loadRoom(isOwner) {
     let roomData = await roomApi.getRoomData(roomId);
     questTitle.textContent = roomData.name;
     totalValue.textContent = roomData.total;
-    rewardValue.innerText = `EXP +${roomData.members_reward[currentUserUid]}`;
+    rewardValue.innerText = `EXP  + ${roomData.members_reward[currentUserUid]}`;
     loadTaskList(roomData.tasks);
     loadTodoList();
     loadRankings(roomId);
@@ -347,33 +353,31 @@ function switchTodoModalView(status){
 };
 
 async function loadRankings(roomId){
+
     const top3 = await roomApi.getRankings(roomId);
-    const first = await userApi.uidGetName(top3[0][0]);
-    const second = await userApi.uidGetName(top3[1][0]);
-    const third = await userApi.uidGetName(top3[2][0]);
-    rankingContainer.innerHTML = `
-        <div id="1st" class="ranking-item">
-            <img src="../assets/first-rank.png">
-            <div>
-                <p>${first}</p>
-                <p>${top3[0][1]} EXP</p>
+
+    if (!top3 || top3.length === 0){
+        rankingContainer.innerHTML = "";
+        return;
+    }
+
+    const names = await Promise.all(
+        top3.map(rank => userApi.uidGetName(rank[0]))
+    );
+
+    rankingContainer.innerHTML = top3.map((rank, index) => {
+        const uid = rank[0];
+        const exp = rank[1];
+        return `
+            <div class="ranking-item">
+                <img src="${rankImages[index]}">
+                <div>
+                    <p>${names[index]}</p>
+                    <p>${exp} EXP</p>
+                </div>
             </div>
-        </div>
-        <div id="2nd" class="ranking-item">
-            <img src="../assets/second-rank.png">
-            <div>
-                <p>${second}</p>
-                <p>${top3[1][1]} EXP</p>
-            </div>
-        </div>
-        <div id="3rd" class="ranking-item">
-            <img src="../assets/third-rank.png">
-            <div>
-                <p>${third}</p>
-                <p>${top3[2][1]} EXP</p>
-            </div>
-        </div>
-    `
+        `;
+    }).join("");
 }
 
 

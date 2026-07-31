@@ -13,7 +13,7 @@ export async function createRoom(name, description, date, userUid) {
     owner: userUid,
     members: [{uid: userUid, status: "accepted"}],
     tasks: [],
-    members_reward: {},
+    members_reward: {[userUid]: 0},
     total: 0
   });
 }
@@ -211,6 +211,33 @@ export async function addExpValues(roomId, uid, exp){
     });
 }
 
+// 新增成員時新增members_reward項
+export async function addMembersRewardItem(roomId, uid){
+    const ref = doc(db, "rooms", roomId);
+    const snap = await getDoc(ref);
+    if (!snap.exists()) {
+        return null;
+    }
+    const members_reward = snap.data().members_reward;
+    await updateDoc(ref, {
+        [`members_reward.${uid}`]: 0
+    });
+}
+
+// 成員退出時移除members_reward項
+export async function deleteMembersRewardItem(roomId, uid){
+    const ref = doc(db, "rooms", roomId);
+    const snap = await getDoc(ref);
+    if (!snap.exists()) {
+        return null;
+    }
+    const members_reward = snap.data().members_reward;
+    delete members_reward[uid];
+    await updateDoc(ref, {
+        members_reward: members_reward
+    });
+}
+
 // 認證任務成功後總共完成件數加一  輸入:副本ID
 export async function addTotalValues(roomId){
     const ref = doc(db, "rooms", roomId);
@@ -233,7 +260,6 @@ export async function getRankings(roomId){
     }
 
     const members_reward = snap.data().members_reward;
-    const arr = Object.entries(members_reward);
 
     const top3 = Object.entries(members_reward)
                     .sort((a, b) => b[1] - a[1])

@@ -265,6 +265,7 @@ body{
 #reward-value{
     font-size: 14px;
     margin-right: 30px;
+    white-space: pre;
 }
 
 

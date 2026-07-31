@@ -211,6 +211,7 @@ ownerMemberArea.addEventListener("click", async function (e){
     if (e.target.classList.contains("add-member-btn")) {
         const uid = e.target.dataset.id;
         await roomApi.acceptMember(roomId, uid);
+        await roomApi.addMembersRewardItem(roomId, uid);
         const btnArea = e.target.closest(".member-btn-area");
         btnArea.classList.add("hidden");
     }
@@ -237,6 +238,7 @@ bottomBtn.addEventListener("click", async function() {
     }
     else{
         await roomApi.exitRoom(roomId, auth.currentUser.uid);
+        await roomApi. deleteMembersRewardItem(roomId, auth.currentUser.uid)
         window.location.href = "../page/main.html";
     }
 })
