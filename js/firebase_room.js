@@ -1,5 +1,5 @@
 import { db } from "./firebase.js";
-import { arrayUnion, collection, doc, getDoc, addDoc, getDocs, updateDoc} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+import { arrayUnion, collection, doc, getDoc, addDoc, getDocs, updateDoc, increment} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 // ----------函式定義----------
 
@@ -13,7 +13,7 @@ export async function createRoom(name, description, date, userUid) {
     owner: userUid,
     members: [{uid: userUid, status: "accepted"}],
     tasks: [],
-    members_reward: [],
+    members_reward: {},
     total: 0
   });
 }
@@ -177,4 +177,67 @@ export async function PrepareToProcess(roomId){
     await updateDoc(ref, {
         status: status
     });
+}
+
+// 變更房間狀態process->finish  輸入:副本ID
+export async function ProcessToFinish(roomId){
+    const ref = doc(db, "rooms", roomId);
+    const snap = await getDoc(ref);
+    if (!snap.exists()) {
+        return null;
+    }
+    let status = snap.data().status;
+    status = "finish";
+    await updateDoc(ref, {
+        status: status
+    });
+}
+
+// 認證任務成功後增加exp值  輸入:副本ID 成員ID exp值
+export async function addExpValues(roomId, uid, exp){
+    const ref = doc(db, "rooms", roomId);
+    const snap = await getDoc(ref);
+    if (!snap.exists()) {
+        return null;
+    }
+    const roomData = snap.data();
+    if (roomData.members_reward[uid] === undefined) {
+        await updateDoc(ref, {
+            [`members_reward.${uid}`]: 0
+        });
+    }
+    await updateDoc(ref, {
+        [`members_reward.${uid}`]: increment(exp)
+    });
+}
+
+// 認證任務成功後總共完成件數加一  輸入:副本ID
+export async function addTotalValues(roomId){
+    const ref = doc(db, "rooms", roomId);
+    const snap = await getDoc(ref);
+    if (!snap.exists()) {
+        return null;
+    }
+
+    await updateDoc(ref, {
+        total: increment(1)
+    });
+}
+
+// 透過members_reward獲取排行榜資料  輸入:副本ID 輸出:排行榜資料陣列
+export async function getRankings(roomId){
+    const ref = doc(db, "rooms", roomId);
+    const snap = await getDoc(ref);
+    if (!snap.exists()) {
+        return null;
+    }
+
+    const members_reward = snap.data().members_reward;
+    const arr = Object.entries(members_reward);
+
+    const top3 = Object.entries(members_reward)
+                    .sort((a, b) => b[1] - a[1])
+                    .slice(0, 3);
+    
+    return top3;
 }

@@ -29,6 +29,8 @@ const totalValue = document.getElementById("total-value");
 const questTitle = document.getElementById("quest-title");
 const taskContainer = document.getElementById("task-container");
 const todoContainer = document.getElementById("todo-container");
+const rankingContainer = document.getElementById("ranking-container");
+const rewardValue = document.getElementById("reward-value");
 
 const ownerModal = (() => {
     const root = document.getElementById("owner-modal");
@@ -36,6 +38,7 @@ const ownerModal = (() => {
         root,
         addTaskBtn: root.querySelector(".add-task-btn"),
         verifyTaskBtn: root.querySelector(".verify-task-btn"),
+        finishBtn: root.querySelector(".finish-btn"),
 
         open(){ 
             root.classList.remove("hidden"); 
@@ -156,8 +159,10 @@ async function loadRoom(isOwner) {
     let roomData = await roomApi.getRoomData(roomId);
     questTitle.textContent = roomData.name;
     totalValue.textContent = roomData.total;
+    rewardValue.innerText = `EXP +${roomData.members_reward[currentUserUid]}`;
     loadTaskList(roomData.tasks);
-    loadTodoList()
+    loadTodoList();
+    loadRankings(roomId);
 };
 
 // 載入副本任務列表  輸入:副本tasks欄位資料
@@ -341,6 +346,36 @@ function switchTodoModalView(status){
     }
 };
 
+async function loadRankings(roomId){
+    const top3 = await roomApi.getRankings(roomId);
+    const first = await userApi.uidGetName(top3[0][0]);
+    const second = await userApi.uidGetName(top3[1][0]);
+    const third = await userApi.uidGetName(top3[2][0]);
+    rankingContainer.innerHTML = `
+        <div id="1st" class="ranking-item">
+            <img src="../assets/first-rank.png">
+            <div>
+                <p>${first}</p>
+                <p>${top3[0][1]} EXP</p>
+            </div>
+        </div>
+        <div id="2nd" class="ranking-item">
+            <img src="../assets/second-rank.png">
+            <div>
+                <p>${second}</p>
+                <p>${top3[1][1]} EXP</p>
+            </div>
+        </div>
+        <div id="3rd" class="ranking-item">
+            <img src="../assets/third-rank.png">
+            <div>
+                <p>${third}</p>
+                <p>${top3[2][1]} EXP</p>
+            </div>
+        </div>
+    `
+}
+
 
 // ----------執行程式----------
 
@@ -352,7 +387,7 @@ onAuthStateChanged(auth,  async (user) => {
     }
 
     currentUserUid = user.uid;
-    currentIsOwner = await isOwner(roomId, user.uid);
+    currentIsOwner = await isOwner(roomId, currentUserUid);
     loadRoom(currentIsOwner);
     switchView(currentIsOwner);
 });
@@ -555,7 +590,14 @@ verifyTaskItemModal.root.addEventListener("click", function (e) {
 verifyTaskItemModal.verifyBtn.addEventListener("click", async function () {
     const progressId = this.dataset.id;
     await taskProgressApi.changeStatus(progressId, "completed");
-    loadTodoList();
+    const progressData = await taskProgressApi.getTaskProgressData(progressId)
+    const uid = progressData.uid;
+    const taskId = progressData.taskId;
+    const taskData = await taskApi.getTaskData(taskId);
+    const exp = taskData.reward;
+    await roomApi.addExpValues(roomId, uid, exp);
+    await roomApi.addTotalValues(roomId)
+     loadRoom(currentIsOwner);
     verifyTaskItemModal.close();
 });
 
@@ -576,3 +618,8 @@ todoModal.failedPanelResubmitBtn.addEventListener("click", async function () {
     todoModal.close();
 });
 
+// 點擊結束副本
+ownerModal.finishBtn.addEventListener("click", async function () {
+    await roomApi.ProcessToFinish(roomId);
+    window.location.href = `room_finish.html?id=${roomId}`;
+});
