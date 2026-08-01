@@ -435,9 +435,10 @@ taskContainer.addEventListener("click", async function (e) {
     if (!item) return;
     const taskId = item.dataset.id;
     const taskData = await taskApi.getTaskData(taskId);
+    const type = translate(taskData.type);
     taskModal.content.dataset.id = taskData.id;
     taskModal.taskName.innerText = taskData.name;
-    taskModal.taskType.innerText = taskData.type;
+    taskModal.taskType.innerText = type;
     taskModal.taskDesc.innerText = taskData.description;
     taskModal.taskExp.innerText = taskData.reward;
     taskModal.acceptBtn.dataset.id = taskData.id;
