@@ -23,3 +23,15 @@ const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
 export { auth, provider, signInWithPopup };
+
+
+
+
+
+
+
+
+import { getStorage }
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-storage.js";
+
+export const storage = getStorage(app);
