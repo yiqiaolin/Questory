@@ -45,6 +45,10 @@ const logBlock = (() => {
     };
 })();
 
+// image-modal
+const imageModal = document.getElementById("image-modal");
+const previewImage = document.getElementById("preview-image");
+
 
 // ----------函式定義----------
 
@@ -167,3 +171,19 @@ onAuthStateChanged(auth,  async (user) => {
 
 
 // ----------事件監聽----------
+
+// 點擊開啟image-modal
+logBlock.container.addEventListener("click", async function (e) {
+    const item = e.target.closest("img");
+    if (!item) return;
+    const url = item.src;
+    previewImage.src = url;
+    imageModal.classList.remove("hidden");
+});
+
+// 點擊關閉image-modal
+imageModal.addEventListener("click", function (e) {
+    if (e.target === imageModal) {
+        imageModal.classList.add("hidden");
+    }
+});

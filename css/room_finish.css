@@ -127,3 +127,25 @@ body{
     height: 60px;
     object-fit:cover;
 }
+
+
+/* image modal */
+
+#image-modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100dvh;
+    background: rgba(0,0,0,0.5);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#preview-image{
+    max-width:80dvw;
+    max-height:80dvh;
+    object-fit:contain;
+}
