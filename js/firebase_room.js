@@ -7,7 +7,8 @@ import { arrayUnion, collection, doc, getDoc, addDoc, getDocs, updateDoc, increm
 export async function createRoom(name, description, date, userUid) {
   await addDoc(collection(db, "rooms"), {
     name: name,
-    date: date,
+    startDate: date,
+    endDate: null,
     description: description,
     status: "prepare",
     owner: userUid,
@@ -266,4 +267,13 @@ export async function getRankings(roomId){
                     .slice(0, 3);
     
     return top3;
+}
+
+// 結束副本時寫入結束時間  輸入:副本ID 結束日期
+export async function addEndDate(roomId, date){
+    const ref = doc(db,"rooms",roomId);
+
+    await updateDoc(ref,{
+        endDate: date
+    });
 }

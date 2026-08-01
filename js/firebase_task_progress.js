@@ -115,3 +115,45 @@ export async function clearProofImages(id) {
         proofImages: []
     });
 }
+
+// 取得某成員在該房間完成的任務資料  輸入:房間ID 使用者ID 輸出:文件陣列
+export async function getMemberCompletedTask(roomId, userID){
+    const q = query(
+        collection(db, "task_progress"),
+        where("status", "==", "completed"),
+        where("uid", "==", userID),
+        where("roomId", "==", roomId)
+    );
+
+    const snap = await getDocs(q);
+    const progressList = [];
+    snap.forEach((doc)=>{
+        progressList.push({
+            id: doc.id,
+            ...doc.data()
+        });
+    });
+
+    return progressList;
+}
+
+// 取得某任務的完成資料  輸入:房間ID 任務ID 輸出:文件陣列
+export async function getTaskCompletedData(roomId, taskId){
+    const q = query(
+        collection(db, "task_progress"),
+        where("status", "==", "completed"),
+        where("taskId", "==", taskId),
+        where("roomId", "==", roomId)
+    );
+
+    const snap = await getDocs(q);
+    const progressList = [];
+    snap.forEach((doc)=>{
+        progressList.push({
+            id: doc.id,
+            ...doc.data()
+        });
+    });
+
+    return progressList;
+}

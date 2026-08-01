@@ -5,8 +5,45 @@
     <title>Questory</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/room_finish.css">
     <link rel="icon" href="data:,">
 </head>
 <body>
-    
+    <div id="fixed-block">
+        <p class="quest-name"></p>
+        <p class="quest-date"></p>
+    </div>
+
+    <div id="summary-block">
+        <div class="title">
+            <p>Summary</p>
+            <hr/>
+        </div>
+        <div class="container">
+            <div class="left-area">
+                <div class="item">
+                    <p>👥  夥伴人數</p>
+                    <p class="member-value"></p>
+                </div>
+                <div class="item">
+                    <p>📌  完成任務</p>
+                    <p class="task-value"></p>
+                </div>
+            </div>
+            <div class="vertical-divider"></div>
+            <div class="right-area">
+            </div>
+        </div>
+    </div>
+
+    <div id="log-block">
+        <div class="title">
+            <p>Log</p>
+            <hr/>
+        </div>
+        <div class="container">
+        </div>
+    </div>
+
+    <script type="module" src="../js/room_finish.js"></script>
 </body>

@@ -79,7 +79,7 @@ function showRoomList(rooms) {
             <div class="item" data-id="${room.id}">
                 <div class="item-container"> 
                     <p class="item-name">${room.name}</p>
-                    <p class="item-data">${room.date}</p>
+                    <p class="item-data">${room.startDate}</p>
                 </div>
                 <hr class="item-line"/>
             </div>
@@ -185,6 +185,9 @@ itemArea.addEventListener("click", async function (e) {
     }
     else if (status === "process"){
         window.location.href = `room_process.html?id=${roomId}`;
+    }
+    else if (status === "finish"){
+        window.location.href = `room_finish.html?id=${roomId}`;
     }
 });
 

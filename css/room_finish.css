@@ -1,0 +1,129 @@
+body{
+    padding-top: 120px;
+}
+
+.title p{
+    font-weight: bold;
+    font-size: 14px;
+    margin-left: 15px;
+    margin-bottom: 5px;
+}
+
+.title hr{
+    border: none;
+    border-top: 2px solid #000000;
+    margin: 0 auto;
+}
+
+#fixed-block{
+    width: 100vw;
+    height: 120px;
+    background-color: #EDEBEB;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+#fixed-block .quest-name{
+    font-size: 24px;
+    margin-top: 40px;
+    margin-left: 40px;
+}
+
+#fixed-block .quest-date{
+    white-space: pre;
+    font-size: 12px;
+    margin-top: 10px;
+    margin-left: 40px;
+}
+
+#summary-block{
+    width: 80vw;
+    margin: 20px auto 0 auto;
+}
+
+#summary-block .container{
+    display: flex;
+    align-items: stretch;
+    width: 80vw;
+}
+
+#summary-block .left-area p{
+    font-size: 14px;
+}
+
+#summary-block .left-area .item{
+    margin: 10px;
+}
+
+#summary-block .vertical-divider{
+    width: 1px;
+    background: #626161;
+    margin: 15px 16px;
+}
+
+#summary-block .right-area{
+    margin-right: 10px;
+    flex: 1;
+}
+
+#summary-block .right-area .member-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin: 10px 0px;
+}
+
+#log-block{
+    width: 80vw;
+    margin: 20px auto 0 auto;
+}
+
+#log-block .container .item{
+    border: 1px solid #626161;
+    border-radius: 15px;
+    margin: 20px auto 0 auto;
+    width: 90%;
+}
+
+#log-block .container .task-name{
+    font-size: 12px;
+    color: #626161;
+    margin-left: 20px;
+    margin-bottom: 3px;
+    margin-top: 10px;
+}
+
+#log-block .container hr{
+    width: 90%;
+    border: none;
+    border-top: 1px solid #626161;
+    margin: 0 auto;
+}
+
+#log-block .container .task-desc{
+    font-size: 12px;
+    color: #626161;
+    margin-left: 20px;
+    margin-top: 3px;
+}
+
+#log-block .container .image-area{
+    margin: 10px 20px;
+    display: flex;
+    flex-wrap:wrap;
+    gap: 2px;
+}
+
+#log-block .container .image-area p{
+    font-size: 8px;
+    color: #626161;
+    margin-left: 3px;
+    margin-bottom: 3px;
+}
+
+#log-block .container .image-area img{
+    width: 60px;
+    height: 60px;
+    object-fit:cover;
+}

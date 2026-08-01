@@ -53,6 +53,24 @@ const addTaskModal = (() => {
 
 // ----------函式定義----------
 
+// 確認狀態
+checkStatus();
+
+// 確認狀態
+async function checkStatus(){
+
+    const roomData = await roomApi.getRoomData(roomId);
+
+    if (!roomData){
+        location.href = "main.html";
+        return;
+    }
+    if (roomData.status !== "prepare"){
+        location.href = "main.html";
+        return;
+    }
+}
+
 // 取得副本資料並載入副本名和副本ID
 async function loadRoom(isOwner) {
     let roomData = await roomApi.getRoomData(roomId);

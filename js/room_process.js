@@ -160,6 +160,21 @@ const verifyTaskItemModal = (() => {
 
 // ----------函式定義----------
 
+// 確認狀態
+async function checkStatus(){
+
+    const roomData = await roomApi.getRoomData(roomId);
+
+    if (!roomData){
+        location.href = "main.html";
+        return;
+    }
+    if (roomData.status !== "process"){
+        location.href = "main.html";
+        return;
+    }
+}
+
 // 取得副本資料並載入副本名
 async function loadRoom(isOwner) {
     let roomData = await roomApi.getRoomData(roomId);
@@ -382,6 +397,9 @@ async function loadRankings(roomId){
 
 
 // ----------執行程式----------
+
+// 確認狀態
+checkStatus();
 
 // 確認登入
 onAuthStateChanged(auth,  async (user) => {
@@ -625,5 +643,7 @@ todoModal.failedPanelResubmitBtn.addEventListener("click", async function () {
 // 點擊結束副本
 ownerModal.finishBtn.addEventListener("click", async function () {
     await roomApi.ProcessToFinish(roomId);
+    const date = new Date();
+    await roomApi.addEndDate(roomId, date);
     window.location.href = `room_finish.html?id=${roomId}`;
 });
