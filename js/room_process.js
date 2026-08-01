@@ -238,7 +238,7 @@ function translate(word){
 async function loadTodoList(){
     const todoDoc = await taskProgressApi.getTaskProgress(currentUserUid, roomId);    
     let todoData = todoDoc.map((doc)=>{
-        status = translate(doc.status);
+        const status = translate(doc.status);
 
         return [doc.taskName, status, doc.id]
     });
